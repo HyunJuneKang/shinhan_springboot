@@ -1,14 +1,17 @@
 package com.shinhan.bananaapp.section5;
 
 import com.shinhan.bananaapp.dto.AccountDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 //@Component + 서비스기능
 @Service
+@RequiredArgsConstructor
 public class EmpService {
     //1.field주입
-    @Autowired
-    EmpRepository repo;
+
+    //2.생성자를 통해 주입
+    final EmpRepository repo;
     public AccountDTO selectService(){
         AccountDTO acc = repo.getData();
         return acc;
