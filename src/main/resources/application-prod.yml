@@ -1,0 +1,9 @@
+shinhan:
+  api1:
+    Key1: 6666
+    key2: efgh
+  api2:
+    key1: 7777
+    key2: kang
+server:
+  port: 7777

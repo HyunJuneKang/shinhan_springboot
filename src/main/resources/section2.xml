@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- ══════════════════════════════════════════════════════════
+         Book 빈 정의 (setter injection)
+         People의 books 리스트에 ref 로 주입됨
+    ══════════════════════════════════════════════════════════ -->
+    <bean id="book1" class="com.shinhan.bananaapp.section2.Book">
+        <property name="title" value="Clean Code"/>
+        <property name="price" value="28000"/>
+        <property name="kind"  value="기술서"/>
+    </bean>
+
+    <bean id="book2" class="com.shinhan.bananaapp.section2.Book">
+        <property name="title" value="어린왕자"/>
+        <property name="price" value="12000"/>
+        <property name="kind"  value="소설"/>
+    </bean>
+
+    <bean id="book3" class="com.shinhan.bananaapp.section2.Book">
+        <property name="title" value="미라클 모닝"/>
+        <property name="price" value="15000"/>
+        <property name="kind"  value="자기계발"/>
+    </bean>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         ① Constructor Injection — index 방식
+            <constructor-arg index="순서(0부터)"/>
+            index=0 → name(String)
+            index=1 → age(int)
+            index=2 → birthday(String)
+    ══════════════════════════════════════════════════════════ -->
+    <bean id="person1" class="com.shinhan.bananaapp.section2.People">
+
+        <!-- ── Constructor: index 방식 ───────────────────────── -->
+        <constructor-arg index="0" value="홍길동"/>
+        <constructor-arg index="1" value="28"/>
+        <constructor-arg index="2" value="1996-03-15"/>
+
+        <!-- ── Setter: List<String> — 이메일 여러 개 ─────────── -->
+        <property name="emails">
+            <list>
+                <value>hong@gmail.com</value>
+                <value>hong@naver.com</value>
+                <value>hong@work.com</value>
+            </list>
+        </property>
+
+        <!-- ── Setter: Set<String> — 친구 (중복 제거) ────────── -->
+        <property name="friends">
+            <set>
+                <value>김철수</value>
+                <value>이영희</value>
+                <value>박민준</value>
+                <value>김철수</value>  <!-- 중복 → Set이므로 1개만 저장 -->
+            </set>
+        </property>
+
+        <!-- ── Setter: List<Book> — 빈 참조(ref) ─────────────── -->
+        <property name="books">
+            <list>
+                <ref bean="book1"/>
+                <ref bean="book2"/>
+            </list>
+        </property>
+
+        <!-- ── Setter: Map<String,Integer> — 과목별 점수 ──────── -->
+        <property name="scores">
+            <map>
+                <entry key="국어"   value="95"/>
+                <entry key="영어"   value="88"/>
+                <entry key="수학"   value="72"/>
+                <entry key="과학"   value="91"/>
+            </map>
+        </property>
+
+        <!-- ── Setter: Properties — SNS 계정 ─────────────────── -->
+        <property name="contacts">
+            <props>
+                <prop key="instagram">@hong_gildong</prop>
+                <prop key="github">github.com/honggildong</prop>
+                <prop key="blog">https://hong.tistory.com</prop>
+            </props>
+        </property>
+
+    </bean>
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         ② Constructor Injection — name 방식
+            <constructor-arg name="파라미터명"/>
+            파라미터명은 생성자 선언의 변수명과 동일해야 함
+    ══════════════════════════════════════════════════════════ -->
+    <bean id="person2" class="com.shinhan.bananaapp.section2.People">
+
+        <!-- ── Constructor: name 방식 ────────────────────────── -->
+        <constructor-arg name="name"     value="김영희"/>
+        <constructor-arg name="age"      value="25"/>
+        <constructor-arg name="birthday" value="1999-07-22"/>
+
+        <!-- ── Setter: List<String> — 이메일 ─────────────────── -->
+        <property name="emails">
+            <list>
+                <value>kim@gmail.com</value>
+                <value>kim@daum.net</value>
+            </list>
+        </property>
+
+        <!-- ── Setter: Set<String> — 친구 ────────────────────── -->
+        <property name="friends">
+            <set>
+                <value>홍길동</value>
+                <value>최지우</value>
+                <value>오세훈</value>
+            </set>
+        </property>
+
+        <!-- ── Setter: List<Book> — 빈 참조 ──────────────────── -->
+        <property name="books">
+            <list>
+                <ref bean="book2"/>
+                <ref bean="book3"/>
+            </list>
+        </property>
+
+        <!-- ── Setter: Map<String,Integer> ───────────────────── -->
+        <property name="scores">
+            <map>
+                <entry key="디자인" value="98"/>
+                <entry key="마케팅" value="85"/>
+                <entry key="통계학" value="79"/>
+            </map>
+        </property>
+
+        <!-- ── Setter: Properties ────────────────────────────── -->
+        <property name="contacts">
+            <props>
+                <prop key="instagram">@kim_young</prop>
+                <prop key="youtube">youtube.com/@kimyoung</prop>
+            </props>
+        </property>
+
+    </bean>
+
+</beans>

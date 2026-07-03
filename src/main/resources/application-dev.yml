@@ -1,0 +1,9 @@
+shinhan:
+  api1:
+    Key1: 1234
+    key2: abcd
+  api2:
+    key1: 5555
+    key2: jin
+server:
+  port: 8000

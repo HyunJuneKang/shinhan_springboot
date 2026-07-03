@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  STEP 3 : Spring Bean 설정 파일 (section0.xml)    ║
+    ╠══════════════════════════════════════════════════════════════╣
+    ║  - id="tv" 에 연결된 class 만 바꾸면 TVUser3 소스 수정 불필요 ║
+    ║  - 즉, Java 코드를 전혀 건드리지 않고 브랜드를 교체할 수 있다 ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+
+    <!-- ★ 브랜드 교체: class 속성값만 변경 → 재컴파일 불필요 -->
+    <bean id="tv" class="com.shinhan.bananaapp.section0.SamsungTV" />
+
+    <!-- LG로 바꾸려면 위 줄을 아래로 교체 (주석 처리 전환)
+    <bean id="tv" class="com.shinhan.bananaapp.section0.LGTV" />
+    -->
+
+</beans>
