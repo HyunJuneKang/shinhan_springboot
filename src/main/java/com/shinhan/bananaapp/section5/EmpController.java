@@ -11,7 +11,7 @@ public class EmpController {
     //1.field를 이용해서 Component 주입 (DI,IoC )
     //@Autowired
     //2.생성자를 통해서 Injection
-    final EmpService empService;
+    final EmpServiceInterface empService;
     @GetMapping("/acc")
     public AccountDTO selectData(){
         return empService.selectService();
