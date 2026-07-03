@@ -2,6 +2,7 @@ package com.shinhan.bananaapp.section5;
 
 import com.shinhan.bananaapp.dto.AccountDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,9 +12,12 @@ public class EmpController {
     //1.field를 이용해서 Component 주입 (DI,IoC )
     //@Autowired
     //2.생성자를 통해서 Injection
-    final EmpServiceInterface empService;
+    EmpServiceInterface empS;
+    public EmpController(@Qualifier("empService2") EmpServiceInterface empS){
+        this.empS = empS;
+    }
     @GetMapping("/acc")
     public AccountDTO selectData(){
-        return empService.selectService();
+        return empS.selectService();
     }
 }
