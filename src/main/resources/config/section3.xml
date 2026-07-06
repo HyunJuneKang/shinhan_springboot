@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 1. Target Bean 등록(주업무) calculatorTarget = new Calculator... -->
+    <bean id="calculatorTarget"
+          class="com.shinhan.bananaapp.aop.CalculatorImpl"/>
+
+    <!-- 2. Advice(보조업무,Interceptor) Bean 등록 -->
+    <bean id="logInterceptor"
+          class="com.shinhan.bananaapp.aop.LogInterceptor"/>
+
+    <!-- 3. ProxyFactoryBean 등록 : Proxy 생성 -->
+    <bean id="calculator"
+          class="org.springframework.aop.framework.ProxyFactoryBean">
+
+        <!-- Target 객체 연결 -->
+        <property name="target" ref="calculatorTarget"   />
+
+        <!-- 적용할 인터페이스 지정 -->
+        <property name="proxyInterfaces"
+                  value="com.shinhan.bananaapp.aop.Calculator"/>
+
+        <!-- Interceptor(Advice) 연결 -->
+        <property name="interceptorNames"  >
+            <list>
+                <value>logInterceptor</value>
+            </list>
+        </property>
+
+    </bean>
+
+</beans>

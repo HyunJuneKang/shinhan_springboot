@@ -17,7 +17,6 @@ public class ShinhanRepository {
     //1.생성자를 통해 injection(DI)
     public ShinhanRepository(@Qualifier("makeDTO") ShinhanDTO dto){
         this.dto = dto;
-        System.out.println("ShinhanRepo 생성함" + dto);
     }
     @PostConstruct
     public void init(){

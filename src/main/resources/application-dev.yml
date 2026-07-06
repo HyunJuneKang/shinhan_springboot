@@ -1,3 +1,11 @@
 shinhan:
+  api1:
+    key1: 1234
+    key2: abcd
+  api2:
+    key1: 5555
+    key2: kang
+  api3: ${SHINHAN_API_KEY}
+
 server:
   port: 8000

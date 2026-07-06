@@ -9,7 +9,7 @@ public class TVUser3 {
     }
 
     private static void f1() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("section1.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("config/section1.xml");
         TV tv = context.getBean("tv",TV.class);
         tv.powerOn();
         tv.powerOff();

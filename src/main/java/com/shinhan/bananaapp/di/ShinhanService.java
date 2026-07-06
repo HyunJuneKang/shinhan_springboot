@@ -12,6 +12,5 @@ public class ShinhanService {
     public ShinhanService(ShinhanRepository repo){
         this.repo = repo;
         String result = repo.toString();
-        System.out.println("ShinhanService 생성함" + result);
     }
 }

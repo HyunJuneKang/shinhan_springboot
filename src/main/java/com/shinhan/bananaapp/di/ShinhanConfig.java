@@ -8,18 +8,15 @@ import org.springframework.context.annotation.Primary;
 public class ShinhanConfig {
 
     public ShinhanConfig(){
-        System.out.println("shinhanConfig가 생성함");
     }
 
     @Bean
     @Primary
     public ShinhanDTO makeDTO(){
-        System.out.println("만들어짐");
         return new ShinhanDTO("신한ds","을지로","010-1234-5678");
     }
     @Bean
     public ShinhanDTO makeDTO2(){
-        System.out.println("만들어짐2");
         return new ShinhanDTO("신한ds2","을지로","010-1234-5678");
     }
 

@@ -20,7 +20,7 @@ public class InjectionMain {
 
         // ── 1. Spring 컨테이너 시작 ─────────────────────────────
         ClassPathXmlApplicationContext ctx =
-                new ClassPathXmlApplicationContext("section2.xml");
+                new ClassPathXmlApplicationContext("config/section2.xml");
 
         System.out.println("==============================================");
         System.out.println("  ① Constructor Injection — index 방식");
