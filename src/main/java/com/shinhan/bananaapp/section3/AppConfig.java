@@ -2,8 +2,6 @@ package com.shinhan.bananaapp.section3;
 
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
 
@@ -27,8 +25,8 @@ import java.util.*;
  * @ComponentScan("com.demo")
  * @Bean public Book book1() { ... }
  */
-@Configuration
-@ComponentScan("com.shinhan.bananaapp.section2")    // com.demo 패키지 전체를 스캔
+//@Configuration
+//@ComponentScan("com.shinhan.bananaapp.section2")    // com.demo 패키지 전체를 스캔
 public class AppConfig {
 
     // ── Book 빈 3개 정의 ────────────────────────────────────────────

@@ -1,10 +1,8 @@
 package com.shinhan.bananaapp.section3;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,7 @@ import java.util.Set;
  * ╚══════════════════════════════════════════════════════════════════════╝
  */
 @Getter
-@Component("personV2")
+//@Component("personV2")
 public class PeopleV2 {
 
     // final → 생성자 주입 시 불변 보장
@@ -49,7 +47,7 @@ public class PeopleV2 {
      * <p>
      * Spring 4.3+: 생성자 1개면 @Autowired 생략 가능
      */
-    @Autowired
+    //@Autowired
     public PeopleV2(
             @Value("김영희") String name,
             @Value("25") int age,

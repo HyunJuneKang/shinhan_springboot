@@ -1,9 +1,8 @@
 package com.shinhan.bananaapp.section4;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class AppRunner implements CommandLineRunner {
     private final AccountService service;
     public AppRunner(AccountService service){

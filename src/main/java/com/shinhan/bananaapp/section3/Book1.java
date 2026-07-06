@@ -1,7 +1,6 @@
 package com.shinhan.bananaapp.section3;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 /**
  * ╔══════════════════════════════════════════════════════════════╗
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
  * </bean>
  * After:  @Component + @Value 어노테이션으로 대체
  */
-@Component   // id는 기본적으로 클래스명 소문자 → "book"
+//@Component   // id는 기본적으로 클래스명 소문자 → "book"
 public class Book1 {
     // @Value: 필드에 직접 값을 주입
     // SpEL(Spring Expression Language) 문법 지원
