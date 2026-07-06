@@ -1,9 +1,8 @@
 package com.shinhan.bananaapp.section5;
 
 import com.shinhan.bananaapp.dto.AccountDTO;
-import org.springframework.stereotype.Repository;
 
-@Repository("empRepo")
+//@Repository("empRepo")
 public class EmpRepository {
     public AccountDTO getData(){
         AccountDTO acc = AccountDTO.builder()
