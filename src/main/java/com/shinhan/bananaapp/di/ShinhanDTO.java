@@ -8,6 +8,4 @@ public class ShinhanDTO {
     String companyName;
     String location;
     String contact;
-
-
 }
