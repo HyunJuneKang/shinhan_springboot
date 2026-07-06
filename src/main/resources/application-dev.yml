@@ -7,5 +7,14 @@ shinhan:
     key2: kang
   api3: ${SHINHAN_API_KEY}
 
+#default로 설정됨 templates 밑에 저장이 된다
+#spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/   # 탐색 경로
+#    suffix: .html                    # 확장자
+#    cache: false                    # 개발 중 캐시 끄기 (devtools 있으면 자동)
+#    encoding: UTF-8
+
+
 server:
   port: 8000

@@ -21,7 +21,7 @@ public class StopWatchAdvice {
     public Object aroundMethod(ProceedingJoinPoint jp) throws Throwable {
 
         System.out.println("****** " + jp.getSignature().getName()
-                + " 메서드 호출 전(StopWatchAdvice)");
+                + " order(1)메서드 호출 전(StopWatchAdvice)");
 
         // 보조업무 — 시간 측정 시작
         StopWatch watch = new StopWatch("계산시간");
@@ -32,9 +32,9 @@ public class StopWatchAdvice {
 
         // 보조업무 — 시간 측정 종료
         System.out.println("****** " + jp.getSignature().getName()
-                + " 메서드 호출 후(StopWatchAdvice)");
+                + " order(1)메서드 호출 후(StopWatchAdvice)");
         watch.stop();
-        System.out.println("주업무를 수행하는데 걸리는 시간: "
+        System.out.println("order(1)주업무를 수행하는데 걸리는 시간: "
                 + watch.getTotalTimeMillis() + "ms");
         System.out.println(watch.prettyPrint());
 
