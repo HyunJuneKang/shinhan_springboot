@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Thymeleaf Prac</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<!-- namespace: 이름공간 , HTML기술과 thymeleaf 기술을 구별 ,
+    정의시 같은 url을 준다. URL은 이름으로 부적합핟.
+    그래서 접두사를 사용한다.
+-->
+<body>
+<!-- Flash 메시지 표시 -->
+<!--/*@thymesVar id="msg" type=""*/-->
+<div th:if="${msg != null}" class="alert" th:text="${msg}"></div>
+
+<a th:href="@{/account/insert}">입력</a>
+<table>
+    <tr>
+        <th>계좌번호</th><th>예금주</th><th>잔액</th><th>관리</th>
+    </tr>
+    <tr th:each="acc : ${acclist}">
+        <td th:text="${acc.id}"></td>
+        <td th:text="${acc.ownerName}"></td>
+        <!-- 잔액 음수면 빨간색 -->
+        <td th:text="${#numbers.formatInteger(acc.balance, 3, 'COMMA')}"
+            th:class="${acc.balance < 0 ? 'text-danger' : ''}"></td>
+        <td>
+            <a th:href="@{/account/detail(id=${acc.id})}">상세1</a>
+            <a th:href="@{/account/detail/{id}(id=${acc.id})}">상세2</a>
+        </td>
+    </tr>
+    <!-- 데이터 없을 때 -->
+    <tr th:if="${#lists.isEmpty(acclist)}">
+        <td colspan="4">등록된 계좌가 없습니다.</td>
+    </tr>
+</table>
+<script th:if="${msg != null}" th:inline="javascript">
+    alert(/*[[${msg}]]*/ "");
+</script>
+</body>
+</html>

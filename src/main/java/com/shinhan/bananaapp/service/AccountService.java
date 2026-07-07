@@ -10,9 +10,8 @@ import java.util.List;
 @Service("shinhanAccount")
 public class AccountService {
 
-    @Qualifier("accRepo")
     private final AccountRepository accountRepository;
-    AccountService(AccountRepository accountRepository){
+    AccountService(@Qualifier("accRepo") AccountRepository accountRepository){
         this.accountRepository = accountRepository;
     }
     public List<AccountDTO> selectAllService() {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/account/insert}" th:object="${accountDTO}" method="post">
+    <label for="accountId">ID</label>
+    <input id="accountId" type="text" th:field="*{id}" placeholder="ID">
+    <label for="accountNo">계좌번호</label>
+    <input id=accountNo type="text" th:field="*{accountNo}" placeholder="계좌번호">
+    <label for="ownerName">예금주</label>
+    <input id=ownerName type="text" th:field="*{ownerName}" placeholder="예금주">
+    <label for="balance">초기 잔액</label>
+    <input id=balance type="number" th:field="*{balance}" placeholder="초기 잔액">
+
+    <label for="accountType">계좌 유형</label>
+    <select id="accountType" th:field="*{accountType}">
+        <option value="SAVINGS">저축예금</option>
+        <option value="CHECKING">당좌예금</option>
+    </select>
+    <button type="submit">입력</button>
+</form>
+</body>
+</html>

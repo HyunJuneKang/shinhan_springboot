@@ -1,10 +1,9 @@
 package com.shinhan.bananaapp.aop2;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CalcmainApp2 implements CommandLineRunner{
+public class CalcmainApp2{
     CalculatorImpl calc;
     public CalcmainApp2(CalculatorImpl calc){
         this.calc = calc;
