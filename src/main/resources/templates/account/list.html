@@ -24,7 +24,9 @@
         <th>계좌번호</th><th>예금주</th><th>잔액</th><th>관리</th>
     </tr>
     <tr th:each="acc : ${acclist}">
-        <td th:text="${acc.id}"></td>
+        <td th:text="${acc.id}"
+            th:classappend="${lastViewAccount.equals(acc.id.toString())} ? ' text-danger'">
+        </td>
         <td th:text="${acc.ownerName}"></td>
         <!-- 잔액 음수면 빨간색 -->
         <td th:text="${#numbers.formatInteger(acc.balance, 3, 'COMMA')}"

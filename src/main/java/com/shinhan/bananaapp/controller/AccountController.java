@@ -1,5 +1,6 @@
 package com.shinhan.bananaapp.controller;
 
+import com.shinhan.bananaapp.annotation.LoginRequired;
 import com.shinhan.bananaapp.di2.EmpDTO;
 import com.shinhan.bananaapp.dto.AccountDTO;
 import com.shinhan.bananaapp.service.AccountService;
@@ -22,6 +23,7 @@ public class AccountController {
     //이스터에그
     @GetMapping("/hungry")
     public String retrieve(Model model){
+
         //model : controller와 html간의 공유 공간
         model.addAttribute("myname","jin");
         model.addAttribute("emp", EmpDTO.builder().empId(4).empName("강").salary(1000L).build());
@@ -30,10 +32,21 @@ public class AccountController {
         return "account/list";
     }
     @GetMapping
-    public String f_selectAll(Model model){
+    public String f_selectAll(Model model,@CookieValue(value = "lastViewAccount",defaultValue = "")String accId,
+                              @CookieValue(value = "myname",defaultValue = "")String myname ,
+                              HttpServletResponse response){
         model.addAttribute("acclist",accountService.selectAllService());
+        model.addAttribute("lastViewAccount",accId);
+        model.addAttribute("myname",myname);
+
+        Cookie cookie = new Cookie("lastViewAccount",null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);//즉시 삭제
+        response.addCookie(cookie);
+
         return "account/list";
     }
+    @LoginRequired(role = "MANAGER")
     @GetMapping("/insert")
     public String f_insertForm(Model model){
         model.addAttribute("accountDTO",new AccountDTO());
@@ -49,7 +62,7 @@ public class AccountController {
         return "account/detail";
     }
     private void setCookie(HttpServletResponse response,Long id){
-        Cookie cookie = new Cookie("lasyViewAccount",id.toString()); // 이름과 값을 가지고 쿠키를 생성
+        Cookie cookie = new Cookie("lastViewAccount",id.toString()); // 이름과 값을 가지고 쿠키를 생성
         cookie.setMaxAge(60 * 60 * 2); //유효기간 초단위 , 7200초 = 2시간
         cookie.setPath("/"); //쿠기 경로
         cookie.setHttpOnly(true);  //자바스크립트 JS 에서 쿠키 접근 불가
@@ -57,9 +70,9 @@ public class AccountController {
 
         //쿠키 하나 더 추가하려면 이렇게함
         Cookie cookie2 = new Cookie("myname","현준"); // 이름과 값을 가지고 쿠키를 생성
-        cookie.setMaxAge(60 * 60 * 2); //유효기간 초단위 , 7200초 = 2시간
-        cookie.setPath("/"); //쿠기 경로
-        cookie.setHttpOnly(true);  //자바스크립트 JS 에서 쿠키 접근 불가
+        cookie2.setMaxAge(60 * 60 * 2); //유효기간 초단위 , 7200초 = 2시간
+        cookie2.setPath("/"); //쿠기 경로
+        cookie2.setHttpOnly(true);  //자바스크립트 JS 에서 쿠키 접근 불가
         response.addCookie(cookie2);
     }
     @GetMapping("/detail/{id}")
@@ -67,7 +80,7 @@ public class AccountController {
         AccountDTO account = accountService.selectById(id);
 
         model.addAttribute("acc", account);
-        model.addAttribute("type", "RequestParam");
+        model.addAttribute("type", "PathVariable");
         model.addAttribute("accountDTO", account);
 
         setCookie(response,id);
