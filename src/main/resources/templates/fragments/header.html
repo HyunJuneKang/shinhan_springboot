@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>fragment header</title>
+</head>
+<body>
+<header th:fragment="siteHeader">
+    <h1>사이트 헤더</h1>
+    <nav>
+        <a th:href="@{/}">신한은행 계좌관리</a>
+        <a th:href="@{/account}">계좌 목록</a>
+    </nav>
+</header>
+
+<header th:fragment="siteHeader2">
+    <nav>
+        <a th:href="@{/}">신한은행 계좌관리2</a>
+        <a th:href="@{/account}">계좌 목록2</a>
+    </nav>
+</header>
+
+</body>
+</html>

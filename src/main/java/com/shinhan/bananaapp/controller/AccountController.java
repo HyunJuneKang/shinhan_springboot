@@ -3,6 +3,8 @@ package com.shinhan.bananaapp.controller;
 import com.shinhan.bananaapp.di2.EmpDTO;
 import com.shinhan.bananaapp.dto.AccountDTO;
 import com.shinhan.bananaapp.service.AccountService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,29 +34,43 @@ public class AccountController {
         model.addAttribute("acclist",accountService.selectAllService());
         return "account/list";
     }
-
     @GetMapping("/insert")
     public String f_insertForm(Model model){
         model.addAttribute("accountDTO",new AccountDTO());
         return "account/insert";
     }
-
     @GetMapping("/detail")
-    public String f_detail(@RequestParam("id") Long id,Model model){
+    public String f_detail(@RequestParam("id") Long id, Model model, HttpServletResponse response){
         AccountDTO account = accountService.selectById(id);
-
         model.addAttribute("acc", account);
         model.addAttribute("type", "RequestParam");
         model.addAttribute("accountDTO", account);
+        setCookie(response,id);
         return "account/detail";
     }
+    private void setCookie(HttpServletResponse response,Long id){
+        Cookie cookie = new Cookie("lasyViewAccount",id.toString()); // 이름과 값을 가지고 쿠키를 생성
+        cookie.setMaxAge(60 * 60 * 2); //유효기간 초단위 , 7200초 = 2시간
+        cookie.setPath("/"); //쿠기 경로
+        cookie.setHttpOnly(true);  //자바스크립트 JS 에서 쿠키 접근 불가
+        response.addCookie(cookie);
+
+        //쿠키 하나 더 추가하려면 이렇게함
+        Cookie cookie2 = new Cookie("lasyViewAccount",id.toString()); // 이름과 값을 가지고 쿠키를 생성
+        cookie.setMaxAge(60 * 60 * 2); //유효기간 초단위 , 7200초 = 2시간
+        cookie.setPath("/"); //쿠기 경로
+        cookie.setHttpOnly(true);  //자바스크립트 JS 에서 쿠키 접근 불가
+        response.addCookie(cookie2);
+    }
     @GetMapping("/detail/{id}")
-    public String f_detail2(@PathVariable("id") Long id,Model model){
+    public String f_detail2(@PathVariable("id") Long id,Model model,HttpServletResponse response){
         AccountDTO account = accountService.selectById(id);
 
         model.addAttribute("acc", account);
         model.addAttribute("type", "RequestParam");
         model.addAttribute("accountDTO", account);
+
+        setCookie(response,id);
         return "account/detail";
     }
     @PostMapping("/update")
@@ -70,7 +86,6 @@ public class AccountController {
 
         return "redirect:/account";
     }
-
     @PostMapping("/insert")
     public String f_insert(@ModelAttribute AccountDTO account, RedirectAttributes rttr){
         int result = accountService.insertService(account);

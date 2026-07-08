@@ -17,4 +17,12 @@ public class EmpService {
     public int insertEmpService(EmpDTO emp) {
         return empRepo.insertEmp(emp);
     }
+
+    public EmpDTO selectByIdService(int id) {
+        return empRepo.selectById(id);
+    }
+
+    public int updateService(EmpDTO emp) {
+        return empRepo.updateEmp(emp);
+    }
 }

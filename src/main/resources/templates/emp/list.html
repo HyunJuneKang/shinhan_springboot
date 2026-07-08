@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>직원 목록</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:if="${msg != null}" class="alert" th:text="${msg}"></div>
+
+<a id="hyperlink" th:href="@{/employees/insert}">입력</a>
+<table>
+    <tr>
+        <th>ID</th><th>이름</th><th>연봉</th><th>관리</th>
+    </tr>
+    <tr th:each="emp : ${empList}">
+        <td th:text="${emp.empId}"></td>
+        <td th:text="${emp.empName}"></td>
+        <td th:text="${emp.salary}"></td>
+        <td>
+            <a th:href="@{/employees/detail(id=${emp.empId})}">상세1</a>
+            <a th:href="@{/employees/detail/{id}(id=${emp.empId})}">상세2</a>
+        </td>
+    </tr>
+    <!-- 데이터 없을 때 -->
+    <tr th:if="${#lists.isEmpty(empList)}">
+        <td colspan="4">등록된 직원이 없습니다.</td>
+    </tr>
+</table>
+<script th:if="${msg != null}" th:inline="javascript">
+    alert(/*[[${msg}]]*/ "");
+</script>
+</body>
+</html>

@@ -4,8 +4,6 @@ body { font-family: Arial, sans-serif; font-size: 14px; padding: 20px; color: #3
 
 /* ── 공통 ── */
 h2 { margin-bottom: 16px; color: #1F4E79; }
-a  { color: #2E75B6; text-decoration: none; }
-a:hover { text-decoration: underline; }
 
 /* ── 폼 ── */
 .form-wrap { max-width: 400px; }
@@ -26,3 +24,24 @@ tr:nth-child(even) { background: #f5f8fc; }
 /* ── 잔액 음수 ── */
 .text-danger { color: #C00000; font-weight: bold; }
 
+#hyperlink{
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow:
+            0 6px 12px rgba(0,0,0,0.3),
+            inset 0 0 0 3px #f6d77a;
+    color: black;
+    transition: transform 0.4s;
+    cursor: pointer;
+    text-decoration-line: none;
+}
+
+#hyperlink:hover{
+    background-color:silver;
+    transform: translateY(5px);
+}

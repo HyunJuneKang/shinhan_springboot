@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
 <head>
     <meta charset="UTF-8">
     <title>Account Thymeleaf Prac</title>
@@ -10,6 +13,7 @@
     그래서 접두사를 사용한다.
 -->
 <body>
+<main layout:fragment="content">
 <!-- Flash 메시지 표시 -->
 <!--/*@thymesVar id="msg" type=""*/-->
 <div th:if="${msg != null}" class="alert" th:text="${msg}"></div>
@@ -35,6 +39,7 @@
         <td colspan="4">등록된 계좌가 없습니다.</td>
     </tr>
 </table>
+</main>
 <script th:if="${msg != null}" th:inline="javascript">
     alert(/*[[${msg}]]*/ "");
 </script>

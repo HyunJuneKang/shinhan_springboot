@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/employees/insert}" th:object="${emp}" method="post">
+    <label for="accountId">ID</label>
+    <input id="accountId" type="text" th:field="*{empId}" placeholder="ID">
+    <label for="accountNo">이름</label>
+    <input id=accountNo type="text" th:field="*{empName}" placeholder="이름">
+    <label for="ownerName">연봉</label>
+    <input id=ownerName type="text" th:field="*{salary}" placeholder="연봉">
+
+    <button type="submit">입력</button>
+</form>
+</body>
+</html>

@@ -41,4 +41,22 @@ public class EmpRepository {
         empList.add(emp);
         return 1;
     }
+
+    public EmpDTO selectById(int id) {
+        EmpDTO emp = null;
+        for(EmpDTO curEmp : empList){
+            if(curEmp.getEmpId() == id)
+                emp = curEmp;
+        }
+        return emp;
+    }
+
+    public int updateEmp(EmpDTO emp) {
+        EmpDTO selEmp = selectById(emp.getEmpId());
+        if (selEmp == null)
+            return -1;
+        selEmp.setSalary(emp.getSalary());
+        selEmp.setEmpName(emp.getEmpName());
+        return 1;
+    }
 }

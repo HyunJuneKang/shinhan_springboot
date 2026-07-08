@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>직원 상세정보</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            font-size:16px;
+        }
+        .emp-card{
+            width: 300px;
+            padding: 20px;
+            background-color: #163a34;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            box-shadow:
+                    0 6px 12px rgba(0,0,0,0.3),
+                    inset 0 0 0 3px #f6d77a;
+            color: white;
+            transition: transform 0.4s;
+            cursor: pointer;
+        }
+        .emp-card-detail{
+            width: 200px;
+            padding: 20px;
+            background-color: #163a34;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            box-shadow:
+                    0 6px 12px rgba(0,0,0,0.3),
+                    inset 0 0 0 3px #f6d77a;
+            color: white;
+            transition: transform 0.4s;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="emp-card">
+    <h1 th:text="${emp.empName}+'직원 상세정보 조회'+ ${type}"></h1>
+    <div class="emp-card-detail">
+        <span>직원 ID: </span>
+        <span th:text="${emp.empId}"></span>
+    </div>
+    <div class="emp-card-detail">
+        <span>이름: </span>
+        <span th:text="${emp.empName}"></span>
+    </div>
+    <div class="emp-card-detail">
+        <span>연봉: </span>
+        <span th:text="${emp.salary}"></span>
+    </div>
+</div>
+<div class="form-wrap">
+    <form th:action="@{/employees/update}" th:object="${emp}" method="post">
+        <input type="hidden" th:field="*{empId}">
+        <label for="accountNo">이름</label>
+        <input id=accountNo type="text" th:field="*{empName}" placeholder="이름">
+        <label for="ownerName">연봉</label>
+        <input id=ownerName type="text" th:field="*{salary}" placeholder="연봉">
+        <button type="submit">수정</button>
+    </form>
+</div>
+</body>
+
+</html>
