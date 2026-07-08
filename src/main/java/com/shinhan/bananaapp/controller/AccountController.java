@@ -56,7 +56,7 @@ public class AccountController {
         response.addCookie(cookie);
 
         //쿠키 하나 더 추가하려면 이렇게함
-        Cookie cookie2 = new Cookie("lasyViewAccount",id.toString()); // 이름과 값을 가지고 쿠키를 생성
+        Cookie cookie2 = new Cookie("myname","현준"); // 이름과 값을 가지고 쿠키를 생성
         cookie.setMaxAge(60 * 60 * 2); //유효기간 초단위 , 7200초 = 2시간
         cookie.setPath("/"); //쿠기 경로
         cookie.setHttpOnly(true);  //자바스크립트 JS 에서 쿠키 접근 불가
