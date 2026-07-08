@@ -4,11 +4,12 @@
       layout:decorate="~{layout/default}">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Title</title>
 </head>
 <body>
 <main layout:fragment="content">
-<form th:action="@{/account/insert}" th:object="${accountDTO}" method="post">
+<form class="form-wrap" th:action="@{/account/insert}" th:object="${accountDTO}" method="post">
     <label for="accountId">ID</label>
     <input id="accountId" type="text" th:field="*{id}" placeholder="ID">
     <label for="accountNo">계좌번호</label>

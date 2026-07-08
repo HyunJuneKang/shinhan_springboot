@@ -25,17 +25,17 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         MemberDTO member = memberService.login(MemberDTO.builder().email("abcd").password("1234")
                 .mRole("manager").build());
-        log.info(member.toString());
+//        log.info(member.toString());
 
         String uri = request.getRequestURI();
-        log.debug("[Interceptor] 요청 URI: {}", uri);
+//        log.debug("[Interceptor] 요청 URI: {}", uri);
 
         HttpSession session = request.getSession(false);
         boolean isLoggedIn = (session != null
                 && session.getAttribute("loginMember") != null);
 
         if (!isLoggedIn) {
-            log.info("[Interceptor] 미로그인 접근 차단: {}", uri);
+//            log.info("[Interceptor] 미로그인 접근 차단: {}", uri);
             response.sendRedirect("/auth/login?redirectURL=" + uri);
             return false;  // 요청 차단
         }
