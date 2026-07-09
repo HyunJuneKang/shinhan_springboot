@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Account Thymeleaf Prac</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style2.css}">
 </head>
 <!-- namespace: 이름공간 , HTML기술과 thymeleaf 기술을 구별 ,
     정의시 같은 url을 준다. URL은 이름으로 부적합핟.
@@ -34,6 +35,7 @@
         <td>
             <a th:href="@{/account/detail(id=${acc.id})}">상세1</a>
             <a th:href="@{/account/detail/{id}(id=${acc.id})}">상세2</a>
+            <a th:href="@{/account/delete/{id}(id=${acc.id})}">삭제</a>
         </td>
     </tr>
     <!-- 데이터 없을 때 -->
@@ -41,6 +43,26 @@
         <td colspan="4">등록된 계좌가 없습니다.</td>
     </tr>
 </table>
+<div id="container">
+    <form action="/account/transfer" method="post">
+        <label>보내는 계좌(ID)</label>
+        <input type="number"
+               name="fromId"
+               placeholder="예 : 1"
+               required>
+        <label>받는 계좌(ID)</label>
+        <input type="number"
+               name="toId"
+               placeholder="예 : 2"
+               required>
+        <label>이체 금액</label>
+        <input type="number"
+               name="amount"
+               placeholder="예 : 50000"
+               required>
+        <button type="submit">이체하기</button>
+    </form>
+</div>
 </main>
 <script th:if="${msg != null}" th:inline="javascript">
     alert(/*[[${msg}]]*/ "");

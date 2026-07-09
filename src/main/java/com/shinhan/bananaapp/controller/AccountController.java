@@ -1,9 +1,8 @@
 package com.shinhan.bananaapp.controller;
 
 import com.shinhan.bananaapp.annotation.LoginRequired;
-import com.shinhan.bananaapp.di2.EmpDTO;
 import com.shinhan.bananaapp.dto.AccountDTO;
-import com.shinhan.bananaapp.service.AccountService;
+import com.shinhan.bananaapp.service.AccountServiceUsingMyBatis;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,18 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
-    final AccountService accountService;
-    //이스터에그
-    @GetMapping("/hungry")
-    public String retrieve(Model model){
+//    final AccountService accountService;
 
-        //model : controller와 html간의 공유 공간
-        model.addAttribute("myname","jin");
-        model.addAttribute("emp", EmpDTO.builder().empId(4).empName("강").salary(1000L).build());
-        model.addAttribute("comment1","<h1>성실!!!!</h1>");
-        model.addAttribute("comment2","<script>alert('배고파');</script>");
-        return "account/list";
-    }
+    //MyBatis이용하기
+    final AccountServiceUsingMyBatis accountService;
+
+
     @GetMapping
     public String f_selectAll(Model model,@CookieValue(value = "lastViewAccount",defaultValue = "")String accId,
                               @CookieValue(value = "myname",defaultValue = "")String myname ,
@@ -54,7 +47,7 @@ public class AccountController {
     }
     @GetMapping("/detail")
     public String f_detail(@RequestParam("id") Long id, Model model, HttpServletResponse response){
-        AccountDTO account = accountService.selectById(id);
+        AccountDTO account = accountService.selectByIdService(id);
         model.addAttribute("acc", account);
         model.addAttribute("type", "RequestParam");
         model.addAttribute("accountDTO", account);
@@ -77,7 +70,7 @@ public class AccountController {
     }
     @GetMapping("/detail/{id}")
     public String f_detail2(@PathVariable("id") Long id,Model model,HttpServletResponse response){
-        AccountDTO account = accountService.selectById(id);
+        AccountDTO account = accountService.selectByIdService(id);
 
         model.addAttribute("acc", account);
         model.addAttribute("type", "PathVariable");
@@ -99,6 +92,11 @@ public class AccountController {
 
         return "redirect:/account";
     }
+    @GetMapping("/delete/{id}")
+    public String f_delete(@PathVariable("id") Long id, RedirectAttributes rttr){
+        accountService.delete(id);
+        return "redirect:/account";
+    }
     @PostMapping("/insert")
     public String f_insert(@ModelAttribute AccountDTO account, RedirectAttributes rttr){
         int result = accountService.insertService(account);
@@ -109,6 +107,15 @@ public class AccountController {
         } else {
             rttr.addFlashAttribute("msg", "입력에 실패하셨습니다.");
         }
+
+        return "redirect:/account";
+    }
+    @PostMapping("/transfer")
+    public String f_transfer(@RequestParam("fromId") Long fromId,
+                             @RequestParam("toId") Long toId,
+                             @RequestParam("amount") Long amount) {
+
+        accountService.transfer(fromId, toId, amount);
 
         return "redirect:/account";
     }

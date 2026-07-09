@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shinhan.bananaapp.mapper.AccountMapper">
+
+    <!-- ResultMap: DB 컬럼 → Java 필드 명시적 매핑 -->
+    <resultMap id="accountResultMap" type="AccountDTO">
+        <id property="id" column="id"/>
+        <result property="accountNo"   column="account_no"/>
+        <result property="ownerName"   column="owner_name"/>
+        <result property="balance"     column="balance"/>
+        <result property="accountType" column="account_type"/>
+        <result property="createdAt"   column="created_at"/>
+    </resultMap>
+    <select id="findAll" resultMap="accountResultMap">
+        SELECT * FROM accounts ORDER BY id DESC
+    </select>
+
+    <select id="count" resultMap="accountResultMap">
+        SELECT COUNT(*) FROM accounts
+    </select>
+
+    <select id="findById" parameterType="Long" resultMap="accountResultMap">
+        SELECT * FROM accounts WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="AccountDTO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO accounts (account_no, owner_name, balance, account_type)
+        VALUES (#{accountNo}, #{ownerName}, #{balance}, #{accountType})
+    </insert>
+
+    <update id="update" parameterType="AccountDTO">
+        UPDATE accounts
+        SET owner_name=#{ownerName}, balance=#{balance}, account_type=#{accountType}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM accounts WHERE id = #{id}
+    </delete>
+
+    <!-- 입금 -->
+    <update id="withdraw" parameterType="map">
+        UPDATE accounts
+        SET balance = balance - #{amount}
+        WHERE id = #{fromId}
+          AND balance >= #{amount}
+    </update>
+
+    <update id="deposit" parameterType="map">
+        UPDATE accounts
+        SET balance = balance + #{amount}
+        WHERE id = #{toId}
+    </update>
+
+</mapper>
