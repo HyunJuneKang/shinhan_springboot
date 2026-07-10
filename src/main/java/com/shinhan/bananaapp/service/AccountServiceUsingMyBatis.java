@@ -2,6 +2,7 @@ package com.shinhan.bananaapp.service;
 
 import com.shinhan.bananaapp.dto.AccountDTO;
 import com.shinhan.bananaapp.dto.AccountSearchDTO;
+import com.shinhan.bananaapp.dto.AccountWithAttachmentDTO;
 import com.shinhan.bananaapp.mapper.AccountMapper;
 import com.shinhan.bananaapp.repository.AccountRepository2;
 import lombok.RequiredArgsConstructor;
@@ -161,5 +162,18 @@ public class AccountServiceUsingMyBatis {
         }
         return account;
     }
-
+    // ── 방식 1: Flat ResultMap 조회 ──────────────────
+    @Transactional(readOnly = true)
+    public List<AccountWithAttachmentDTO> findAllWithAttachmentFlat() {
+        return accountMapper.findAllWithAttachmentFlat();
+    }
+    // ── 방식 2: collection ResultMap 조회 ────────────
+    // detail 화면 — 계좌 1건 + 첨부파일 리스트
+    @Transactional(readOnly = true)
+    public AccountDTO findByIdWithAttachment(Long id) {
+        AccountDTO account = accountMapper.findByIdWithAttachment(id);
+        if (account == null)
+            throw new IllegalArgumentException("계좌를 찾을 수 없습니다. id=" + id);
+        return account;
+    }
 }

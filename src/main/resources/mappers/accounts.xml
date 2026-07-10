@@ -25,6 +25,32 @@
         SELECT * FROM accounts WHERE id = #{id}
     </select>
 
+    <select id="findByCondition" parameterType="AccountSearchDTO"
+            resultMap="accountResultMap">
+        SELECT * FROM accounts
+        <where>
+            <if test="ownerName != null and ownerName != ''">
+                AND owner_name LIKE CONCAT('%', #{ownerName}, '%')
+            </if>
+            <if test="accountType != null and accountType != ''">
+                AND account_type = #{accountType}
+            </if>
+            <if test="minBalance != null">
+                AND balance &gt;= #{minBalance}
+            </if>
+            <if test="maxBalance != null">
+                AND balance &lt;= #{maxBalance}
+            </if>
+        </where>
+        <choose>
+            <when test="sortBy == 'balance'">ORDER BY balance DESC</when>
+            <when test="sortBy == 'owner_name'">ORDER BY owner_name ASC</when>
+            <when test="sortBy == 'account_no'">ORDER BY account_no ASC</when>
+            <otherwise>ORDER BY id DESC</otherwise>
+        </choose>
+    </select>
+
+
     <insert id="insert" parameterType="AccountDTO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO accounts (account_no, owner_name, balance, account_type)
         VALUES (#{accountNo}, #{ownerName}, #{balance}, #{accountType})
@@ -53,5 +79,100 @@
         SET balance = balance + #{amount}
         WHERE id = #{toId}
     </update>
-
+    <!-- ════════════════════════════════════════════════
+                 방식 1 — Flat ResultMap
+                 계좌 + 첨부 컬럼을 한 DTO에 flat하게 담기
+                 ────────────────────────────────────────────────
+                 문제점:
+                   계좌 1번에 첨부 2건이면 → 계좌 행이 2번 중복 출력
+                   → collection 방식!!!
+                 ════════════════════════════════════════════════ -->
+    <resultMap id="accountFlatMap"
+               type="AccountWithAttachmentDTO">
+        <!-- account 컬럼 -->
+        <id     property="accountId"   column="account_id"/>
+        <result property="accountNo"   column="account_no"/>
+        <result property="ownerName"   column="owner_name"/>
+        <result property="balance"     column="balance"/>
+        <result property="accountType" column="account_type"/>
+        <!-- attachment 컬럼 — 같은 DTO에 flat하게 -->
+        <result property="attachmentId"      column="att_id"/>
+        <result property="originalFilename"  column="original_filename"/>
+        <result property="savedFilename"     column="saved_filename"/>
+        <result property="fileSize"          column="file_size"/>
+        <result property="fileType"          column="file_type"/>
+    </resultMap>
+    <select id="findAllWithAttachmentFlat"
+            resultMap="accountFlatMap">
+        SELECT
+            a.id           AS account_id,
+            a.account_no,
+            a.owner_name,
+            a.balance,
+            a.account_type,
+            t.id           AS att_id,
+            t.original_filename,
+            t.saved_filename,
+            t.file_size,
+            t.file_type
+        FROM accounts a
+                 LEFT JOIN tbl_attachment t ON a.id = t.account_id
+        ORDER BY a.id DESC, t.id ASC
+    </select>
+    <!-- ════════════════════════════════════════════════
+         방식 2 — collection ResultMap
+         계좌 1건 안에 List<AttachmentDTO> 자동 그룹핑
+         ────────────────────────────────────────────────
+         MyBatis가 account_id 기준으로 자동으로 묶어줌
+         계좌 1건 + 첨부 여러 건 → 행 중복 없이 리스트로 담김
+         ════════════════════════════════════════════════ -->
+    <resultMap id="accountWithAttachmentMap"
+               type="AccountDTO">
+        <!-- account 컬럼 -->
+        <id     property="id"          column="account_id"/>
+        <result property="accountNo"   column="account_no"/>
+        <result property="ownerName"   column="owner_name"/>
+        <result property="balance"     column="balance"/>
+        <result property="accountType" column="account_type"/>
+        <result property="createdAt"   column="created_at"/>
+        <!--
+            collection: 1:N 관계에서 N쪽 리스트 매핑
+            property   = AccountDTO의 필드명
+            ofType     = 리스트 안의 타입
+            att_id가 null이면 (첨부 없는 계좌) → 빈 리스트 []
+        -->
+        <collection property="attachments"
+                    javaType="java.util.ArrayList"
+                    ofType="AttachmentDTO"
+                    notNullColumn="att_id">
+            <id     property="id"               column="att_id"/>
+            <result property="accountId"        column="account_id"/>
+            <result property="originalFilename" column="original_filename"/>
+            <result property="savedFilename"    column="saved_filename"/>
+            <result property="fileSize"         column="file_size"/>
+            <result property="fileType"         column="file_type"/>
+            <result property="createdAt"        column="att_created_at"/>
+        </collection>
+    </resultMap>
+    <select id="findByIdWithAttachment"
+            parameterType="Long"
+            resultMap="accountWithAttachmentMap">
+        SELECT
+            a.id           AS account_id,
+            a.account_no,
+            a.owner_name,
+            a.balance,
+            a.account_type,
+            a.created_at,
+            t.id           AS att_id,
+            t.original_filename,
+            t.saved_filename,
+            t.file_size,
+            t.file_type,
+            t.created_at   AS att_created_at
+        FROM accounts a
+                 LEFT JOIN tbl_attachment t ON a.id = t.account_id
+        WHERE a.id = #{id}
+        ORDER BY t.id ASC
+    </select>
 </mapper>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사원 관리</title>
+    <link rel="stylesheet" href="/css/emp.css">
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="/js/emp.js"></script>
+
+    <h2>🧑‍💼 사원 관리 (JSP + Servlet + jQuery Ajax)</h2>
+    <p>SPA(Single Page Application)</p>
+    <!-- 조회 영역 -->
+    <div>
+      <button id="btnAll">전체 조회</button>
+      <input  type="text" id="searchName" placeholder="이름 검색">
+      <button id="btnSearch">조건 조회</button>
+      <button id="btnNew" style="margin-top:12px; background:#16a34a;">+ 신규 입력</button>
+
+      <fieldset>
+          <legend>여러조건 조회하기</legend>
+          <label>부서선택:</label>
+          <select id="dept_id2">
+          </select>
+          <label>직책선택:</label>
+          <select id="job_id2">
+          </select>
+          <label>급여(>=):</label>
+          <input type="number" id="salary2" placeholder="최소 급여">
+          <label>입사일(>=):</label>
+          <input type="date" id="hire_date2" placeholder="입사일">
+          <button id="btnCondition">여러조건조회</button>
+      </fieldset>
+    </div>
+    <!-- 입력/수정 폼 -->
+    <div id="formBox">
+     <form id="myfrm">
+          <h3 id="formTitle">사원 입력</h3>
+         <input type="text" id="employee_id" name="employeeId" value="" data-empid="" placeholder="직원ID">
+         <input type="text" id="first_name" name="firstName" placeholder="이름">
+         <input type="text" id="last_name" name="lastName" placeholder="성">
+         <input type="text" id="email" name="email" placeholder="email">
+         <input type="text" id="job_id" name="jobId" placeholder="직무(예:IT_PROG)">
+         <input type="number" id="department_id" name="departmentId" placeholder="부서번호">
+         <input type="number" id="salary" name="salary" placeholder="급여">
+         <input type="date" id="hire_date" name="hireDate" placeholder="입사일">
+         <input type="number" id="commission_pct" name="commissionPct" placeholder="커미션">
+         <input type="number" id="manager_id" name="managerId" placeholder="매니저">
+      </form>
+      <br>
+      <button id="btnSave">저장(입력/수정)</button>
+      <button id="btnCancel" style="background:#6b7280;">취소</button>
+    </div>
+    <!-- 목록 테이블 -->
+    <table id="empTable">
+      <thead>
+        <tr>
+          <th>사번</th><th>이름</th><th>직무</th><th>부서</th><th>급여</th><th>직책</th><th>입사일</th><th>관리</th>
+        </tr>
+      </thead>
+      <tbody id="empBody">
+
+      </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
+

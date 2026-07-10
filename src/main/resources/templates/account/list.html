@@ -20,11 +20,63 @@
 <div th:if="${msg != null}" class="alert" th:text="${msg}"></div>
 
 <a th:href="@{/account/insert}">입력</a>
+<div class="search-area">
+    <form action="/account/condition" method="get" class="search-form">
+        <div class="search-item">
+            <label for="ownerName">예금주</label>
+            <input type="text"
+                   id="ownerName"
+                   name="ownerName"
+                   th:value="${session.searchDTO != null ? session.searchDTO.ownerName : ''}"
+                   placeholder="예금주명">
+        </div>
+        <div class="search-item">
+            <label for="minBalance">최소잔액</label>
+            <input type="number"
+                   id="minBalance"
+                   name="minBalance"
+                   th:value="${session.searchDTO != null ? session.searchDTO.minBalance : ''}"
+                   placeholder="최소 잔액">
+        </div>
+        <div class="search-item">
+            <label for="maxBalance">최대잔액</label>
+            <input type="number"
+                   id="maxBalance"
+                   name="maxBalance"
+                   th:value="${session.searchDTO != null ? session.searchDTO.maxBalance : ''}"
+                   placeholder="최대 잔액">
+        </div>
+        <div class="search-item">
+            <label for="sortBy">정렬</label>
+            <select id="sortBy" name="sortBy">
+                <option value="">선택</option>
+
+                <option value="balance"
+                        th:selected="${session.searchDTO != null and session.searchDTO.sortBy == 'balance'}">
+                    잔액순
+                </option>
+
+                <option value="name"
+                        th:selected="${session.searchDTO != null and session.searchDTO.sortBy == 'name'}">
+                    예금주순
+                </option>
+
+                <option value="account_no"
+                        th:selected="${session.searchDTO != null and session.searchDTO.sortBy == 'account_no'}">
+                    계좌번호순
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="search-btn">
+            조건조회
+        </button>
+    </form>
+</div>
 <table>
     <tr>
         <th>계좌번호</th><th>예금주</th><th>잔액</th><th>관리</th>
     </tr>
-    <tr th:each="acc : ${acclist}">
+    <tr th:each="acc : ${accList}">
         <td th:text="${acc.id}"
             th:classappend="${lastViewAccount.equals(acc.id.toString())} ? ' text-danger'">
         </td>
@@ -39,7 +91,7 @@
         </td>
     </tr>
     <!-- 데이터 없을 때 -->
-    <tr th:if="${#lists.isEmpty(acclist)}">
+    <tr th:if="${#lists.isEmpty(accList)}">
         <td colspan="4">등록된 계좌가 없습니다.</td>
     </tr>
 </table>

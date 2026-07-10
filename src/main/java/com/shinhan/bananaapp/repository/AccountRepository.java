@@ -19,15 +19,15 @@ public class AccountRepository {
         acc1.setId(2L);
         acc1.setAccountType("예금");
         acc1.setBalance(300L);
-        acc1.setCreateAt(LocalDate.now());
-        AccountDTO acc2 = new AccountDTO(1L, "123", "김", 100L, "예금", LocalDate.now());
+        acc1.setCreatedAt(LocalDate.now());
+        AccountDTO acc2 = new AccountDTO(1L, "123", "김", 100L, "예금", LocalDate.now(),null);
         AccountDTO acc3 = AccountDTO.builder()
                 .id(3L)
                 .accountNo("345")
                 .ownerName("홍길동")
                 .balance(1000_000_000L)
                 .accountType("예금")
-                .createAt(LocalDate.now())
+                .createdAt(LocalDate.now())
                 .build();
         accountList.add(acc1);
         accountList.add(acc2);
@@ -74,7 +74,7 @@ public class AccountRepository {
             curAcc.setOwnerName(acc.getOwnerName());
             curAcc.setBalance(acc.getBalance());
             curAcc.setAccountType(acc.getAccountType());
-            curAcc.setCreateAt(acc.getCreateAt());
+            curAcc.setCreatedAt(acc.getCreatedAt());
             return 1;
         }
     }

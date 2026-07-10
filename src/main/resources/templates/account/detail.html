@@ -40,27 +40,8 @@
 </head>
 <body>
 <main layout:fragment="content">
-    <div class="acc-card">
-        <h1 th:text="${acc.ownerName}+'직원 상세정보 조회'+ ${type}"></h1>
-        <div class="acc-card-detail">
-            <span>계좌 ID: </span>
-            <span th:text="${acc.id}"></span>
-        </div>
-        <div class="acc-card-detail">
-            <span>계좌번호: </span>
-            <span th:text="${acc.accountNo}"></span>
-        </div>
-        <div class="acc-card-detail">
-            <span>예금주: </span>
-            <span th:text="${acc.ownerName}"></span>
-        </div>
-        <div class="acc-card-detail">
-            <span>잔액: </span>
-            <span th:text="${acc.balance}"></span>
-        </div>
-    </div>
     <div class="form-wrap">
-        <form th:action="@{/account/update}" th:object="${accountDTO}" method="post">
+        <form th:action="@{/account/update}" th:object="${account}" method="post">
             <input type="hidden" th:field="*{id}">
             <label for="accountNo">계좌번호</label>
             <input id=accountNo type="text" th:field="*{accountNo}" placeholder="계좌번호">
@@ -76,6 +57,51 @@
             <button type="submit">수정</button>
         </form>
     </div>
+    <!-- ════════════════════════════════════════════════
+             첨부파일 목록 — collection ResultMap 결과
+             account.attachments = List<AttachmentDTO>
+             MyBatis가 JOIN 결과를 자동으로 리스트로 그룹핑함
+             ════════════════════════════════════════════════ -->
+    <h3>첨부서류</h3>
+    <table>
+        <tr>
+            <th>파일명</th>
+            <th>종류</th>
+            <th>크기</th>
+            <th>관리</th>
+        </tr>
+        <!-- attachments 리스트 반복 -->
+        <tr th:each="att : ${account.attachments}">
+            <td th:text="${att.originalFilename}"></td>
+            <td th:text="${att.fileType}"></td>
+            <!-- 파일 크기: byte → KB 변환 -->
+            <td th:text="${#numbers.formatInteger(att.fileSize / 1024, 1, 'COMMA')} + ' KB'"></td>
+            <td>
+                <!-- 다운로드 -->
+                <a th:href="@{/account/download/{id}(id=${att.id})}">
+                    다운로드
+                </a>
+                &nbsp;
+                <!-- 삭제 -->
+                <form th:action="@{/account/attachment/delete/{id}(id=${att.id})}"
+                      method="post"
+                      style="display:inline"
+                      onsubmit="return confirm('파일을 삭제하시겠습니까?')">
+                    <input type="hidden" name="accountId"
+                           th:value="${account.id}">
+                    <button type="submit"
+                            style="color:red;border:none;background:none;cursor:pointer;">
+                        삭제
+                    </button>
+                </form>
+            </td>
+        </tr>
+        <!-- 첨부파일 없을 때 -->
+        <tr th:if="${#lists.isEmpty(account.attachments)}">
+            <td colspan="4">첨부된 서류가 없습니다.</td>
+        </tr>
+    </table>
+
     <script th:if="${msg != null}" th:inline="javascript">
         alert(/*[[${msg}]]*/ "");
     </script>

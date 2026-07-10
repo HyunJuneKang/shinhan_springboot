@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shinhan.bananaapp.mapper.EmpMapper">
+
+    <!-- ResultMap: DB 컬럼 → Java 필드 명시적 매핑 -->
+    <resultMap id="empResultMap" type="EmpDTO">
+        <id property="employeeId" column="employee_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="jobId" column="job_id"/>
+        <result property="salary" column="salary"/>
+        <result property="commissionPct" column="commission_pct"/>
+        <result property="managerId" column="manager_id"/>
+        <result property="departmentId" column="department_id"/>
+    </resultMap>
+    <select id="findAll" resultMap="empResultMap">
+        SELECT *
+        FROM employees
+        ORDER BY employee_id DESC
+    </select>
+
+    <select id="findById" parameterType="Long" resultMap="empResultMap">
+        SELECT *
+        FROM employees
+        WHERE employee_id = #{id}
+    </select>
+
+    <select id="findByCondition" parameterType="EmpSearchDTO" resultMap="empResultMap">
+        SELECT *
+        FROM employees
+        <where>
+            <if test="employeeId != null">
+                AND employee_id = #{employeeId}
+            </if>
+
+            <if test="empName != null and empName != ''">
+                AND (
+                first_name LIKE CONCAT('%', #{empName}, '%')
+                OR last_name LIKE CONCAT('%', #{empName}, '%')
+                OR CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) LIKE CONCAT('%', #{empName}, '%')
+                OR CONCAT(COALESCE(last_name, ''), COALESCE(first_name, '')) LIKE CONCAT('%', #{empName}, '%')
+                )
+            </if>
+
+            <if test="departmentId != null">
+                AND department_id = #{departmentId}
+            </if>
+
+            <if test="jobId != null and jobId != ''">
+                AND job_id = #{jobId}
+            </if>
+
+            <if test="hireDate != null">
+                AND hire_date &gt;= #{hireDate}
+            </if>
+
+            <if test="minSalary != null">
+                AND salary &gt;= #{minSalary}
+            </if>
+        </where>
+        ORDER BY employee_id DESC
+    </select>
+
+    <select id="selectByName" parameterType="String" resultMap="empResultMap">
+        SELECT *
+        FROM employees
+        WHERE first_name LIKE CONCAT('%', #{value}, '%')
+           OR last_name LIKE CONCAT('%', #{value}, '%')
+           OR CONCAT(COALESCE(first_name, ''), ' ', COALESCE(last_name, '')) LIKE CONCAT('%', #{value}, '%')
+           OR CONCAT(COALESCE(last_name, ''), COALESCE(first_name, '')) LIKE CONCAT('%', #{value}, '%')
+        ORDER BY employee_id DESC
+    </select>
+
+    <insert id="insert" parameterType="EmpDTO">
+        INSERT INTO employees (
+            employee_id,
+            first_name,
+            last_name,
+            email,
+            phone_number,
+            hire_date,
+            job_id,
+            salary,
+            commission_pct,
+            manager_id,
+            department_id
+        )
+        VALUES (
+                   #{employeeId},
+                   #{firstName},
+                   #{lastName},
+                   #{email},
+                   #{phoneNumber},
+                   #{hireDate},
+                   #{jobId},
+                   #{salary},
+                   #{commissionPct},
+                   #{managerId},
+                   #{departmentId}
+               )
+    </insert>
+
+    <update id="update" parameterType="EmpDTO">
+        UPDATE employees
+        SET first_name = #{firstName},
+            last_name = #{lastName},
+            email = #{email},
+            hire_date = #{hireDate},
+            job_id = #{jobId},
+            salary = #{salary},
+            commission_pct = #{commissionPct},
+            manager_id = #{managerId},
+            department_id = #{departmentId}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM employees
+        WHERE employee_id = #{id}
+    </delete>
+
+</mapper>

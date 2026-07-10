@@ -2,6 +2,7 @@ package com.shinhan.bananaapp.mapper;
 
 import com.shinhan.bananaapp.dto.AccountDTO;
 import com.shinhan.bananaapp.dto.AccountSearchDTO;
+import com.shinhan.bananaapp.dto.AccountWithAttachmentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface AccountMapper {
     int delete(Long id);
     int deposit(AccountDTO account);
     int withdraw(AccountDTO account);
+    List<AccountWithAttachmentDTO> findAllWithAttachmentFlat();
+    AccountDTO findByIdWithAttachment(Long id);
+
 }
