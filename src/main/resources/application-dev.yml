@@ -15,6 +15,13 @@ shinhan:
 #    cache: false                    # 개발 중 캐시 끄기 (devtools 있으면 자동)
 #    encoding: UTF-8
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html   # Swagger UI 접근 경로
+    tags-sorter: alpha        # 태그 알파벳 정렬
+  api-docs:
+    path: /api-docs           # OpenAPI JSON 경로
+
 
 server:
   port: 8000

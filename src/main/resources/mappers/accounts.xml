@@ -175,4 +175,27 @@
         WHERE a.id = #{id}
         ORDER BY t.id ASC
     </select>
+
+    <insert id="insertAttachment"
+            parameterType="AttachmentDTO"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tbl_attachment
+        (account_id, original_filename, saved_filename,
+         file_size, file_type)
+        VALUES
+            (#{accountId}, #{originalFilename}, #{savedFilename},
+             #{fileSize}, #{fileType})
+    </insert>
+
+    <delete id="deleteAttachment" parameterType="Long">
+        DELETE FROM tbl_attachment WHERE id = #{id}
+    </delete>
+
+    <select id="findAttachmentById" parameterType="Long"
+            resultType="AttachmentDTO">
+        SELECT id, account_id, original_filename, saved_filename,
+               file_size, file_type, created_at
+        FROM tbl_attachment
+        WHERE id = #{id}
+    </select>
 </mapper>

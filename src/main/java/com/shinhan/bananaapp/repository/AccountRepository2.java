@@ -2,6 +2,7 @@ package com.shinhan.bananaapp.repository;
 
 import com.shinhan.bananaapp.dto.AccountDTO;
 import com.shinhan.bananaapp.dto.AccountSearchDTO;
+import com.shinhan.bananaapp.dto.AttachmentDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -52,5 +53,9 @@ public class AccountRepository2 {
 
     public int deposit(Map<String, Object> map) {
         return sqlSession.update(NS + "deposit", map);
+    }
+
+    public void insertAttachment(AttachmentDTO dto) {
+        sqlSession.insert(NS + "insertAttachment", dto);
     }
 }

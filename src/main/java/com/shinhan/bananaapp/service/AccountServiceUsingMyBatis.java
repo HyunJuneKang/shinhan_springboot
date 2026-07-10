@@ -3,16 +3,25 @@ package com.shinhan.bananaapp.service;
 import com.shinhan.bananaapp.dto.AccountDTO;
 import com.shinhan.bananaapp.dto.AccountSearchDTO;
 import com.shinhan.bananaapp.dto.AccountWithAttachmentDTO;
+import com.shinhan.bananaapp.dto.AttachmentDTO;
 import com.shinhan.bananaapp.mapper.AccountMapper;
 import com.shinhan.bananaapp.repository.AccountRepository2;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 
 @Service
@@ -21,6 +30,13 @@ import java.util.Map;
 @Slf4j
 public class AccountServiceUsingMyBatis {
     final private AccountRepository2 accRepo;
+    @Getter
+    @Value("${file.upload-dir:C:/upload/shinhan}")
+    private String uploadDir;
+
+
+    //    file.upload-dir=C:/upload/shinhan
+    // file.upload-dir: ...에서 ...이 없을시 위 줄을 application에 작성해야만함
     /** 1회 이체 한도 */
     private static final long MAX_TRANSFER_AMOUNT = 10_000_000L;
     final AccountMapper accountMapper;
@@ -175,5 +191,103 @@ public class AccountServiceUsingMyBatis {
         if (account == null)
             throw new IllegalArgumentException("계좌를 찾을 수 없습니다. id=" + id);
         return account;
+    }
+
+
+    @Transactional
+    public void uploadAttachment(Long accountId, MultipartFile file)
+            throws IOException {
+
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("파일이 없습니다.");
+        }
+
+        String originalFilename = file.getOriginalFilename();
+
+        String ext = getString(originalFilename);
+
+        Path dirPath = Paths.get(uploadDir);
+        Files.createDirectories(dirPath);
+
+        String savedFilename =
+                UUID.randomUUID() + "." + ext;
+
+        Path savePath = dirPath.resolve(savedFilename);
+
+        try {
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(
+                        inputStream,
+                        savePath,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+            }
+
+            AttachmentDTO dto = AttachmentDTO.builder()
+                    .accountId(accountId)
+                    .originalFilename(originalFilename)
+                    .savedFilename(savedFilename)
+                    .fileSize(file.getSize())
+                    .fileType(ext)
+                    .build();
+
+            accountMapper.insertAttachment(dto);
+
+            log.info("[Upload] {} → {}",
+                    originalFilename,
+                    savedFilename);
+
+        } catch (Exception e) {
+            Files.deleteIfExists(savePath);
+            throw e;
+        }
+    }
+
+    @NonNull
+    private static String getString(String originalFilename) {
+        if (originalFilename == null || originalFilename.isBlank()) {
+            throw new IllegalArgumentException("파일명이 없습니다.");
+        }
+
+        int dotIndex = originalFilename.lastIndexOf('.');
+
+        if (dotIndex < 0 || dotIndex == originalFilename.length() - 1) {
+            throw new IllegalArgumentException("확장자가 없는 파일입니다.");
+        }
+
+        String ext = originalFilename
+                .substring(dotIndex + 1)
+                .toLowerCase();
+
+        Set<String> allowedExtensions =
+                Set.of("jpg", "jpeg", "png", "pdf");
+
+        if (!allowedExtensions.contains(ext)) {
+            throw new IllegalArgumentException(
+                    "허용되지 않는 파일 형식입니다."
+            );
+        }
+        return ext;
+    }
+
+    @Transactional
+    public void deleteAttachment(Long attachmentId) throws IOException {
+        AttachmentDTO att = accountMapper.findAttachmentById(attachmentId);
+        if (att == null)
+            throw new IllegalArgumentException("첨부파일을 찾을 수 없습니다.");
+        // 실제 파일 삭제
+        Path filePath = Paths.get(uploadDir, att.getSavedFilename());
+        Files.deleteIfExists(filePath);
+        // DB 삭제
+        accountMapper.deleteAttachment(attachmentId);
+        log.info("[Delete] 첨부파일 삭제: {}", att.getOriginalFilename());
+    }
+    @Transactional(readOnly = true)
+    public AttachmentDTO findAttachmentById(Long attachmentId) {
+        AttachmentDTO att = accountMapper.findAttachmentById(attachmentId);
+        if (att == null)
+            throw new IllegalArgumentException(
+                    "첨부파일을 찾을 수 없습니다. id=" + attachmentId);
+        return att;
     }
 }
