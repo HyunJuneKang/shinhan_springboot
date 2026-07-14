@@ -1,8 +1,8 @@
 package com.shinhan.bananaapp.config;
 
-import com.shinhan.bananaapp.filter.EncodingFilter;
-import com.shinhan.bananaapp.filter.LoginCheckFilter;
-import com.shinhan.bananaapp.filter.RequestLoggingFilter;
+import com.shinhan.bananaapp.crosscuttingprac.filter.EncodingFilter;
+import com.shinhan.bananaapp.crosscuttingprac.filter.LoginCheckFilter;
+import com.shinhan.bananaapp.crosscuttingprac.filter.RequestLoggingFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

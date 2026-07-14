@@ -1,6 +1,6 @@
 package com.shinhan.bananaapp.config;
 
-import com.shinhan.bananaapp.filter.LoginCheckInterceptor;
+import com.shinhan.bananaapp.crosscuttingprac.interceptor.LoginCheckInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

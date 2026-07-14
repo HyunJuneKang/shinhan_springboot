@@ -6,11 +6,11 @@
          https://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- 1. Target Bean 등록(주업무) calculatorTarget = new Calculator... -->
     <bean id="calculatorTarget"
-          class="com.shinhan.bananaapp.aop.CalculatorImpl"/>
+          class="com.shinhan.bananaapp.crosscuttingprac.aopprac.aop.CalculatorImpl"/>
 
     <!-- 2. Advice(보조업무,Interceptor) Bean 등록 -->
     <bean id="logInterceptor"
-          class="com.shinhan.bananaapp.aop.LogInterceptor"/>
+          class="com.shinhan.bananaapp.crosscuttingprac.aopprac.aop.LogInterceptor"/>
 
     <!-- 3. ProxyFactoryBean 등록 : Proxy 생성 -->
     <bean id="calculator"
@@ -21,7 +21,7 @@
 
         <!-- 적용할 인터페이스 지정 -->
         <property name="proxyInterfaces"
-                  value="com.shinhan.bananaapp.aop.Calculator"/>
+                  value="com.shinhan.bananaapp.crosscuttingprac.aopprac.aop.Calculator"/>
 
         <!-- Interceptor(Advice) 연결 -->
         <property name="interceptorNames"  >

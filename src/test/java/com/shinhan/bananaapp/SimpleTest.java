@@ -1,7 +1,7 @@
 package com.shinhan.bananaapp;
 
-import com.shinhan.bananaapp.entity1.SampleEntity;
-import com.shinhan.bananaapp.repository.jpa.SampleRepository;
+import com.shinhan.bananaapp.jpaprac.entity.entity1.SampleEntity;
+import com.shinhan.bananaapp.jpaprac.repository.SampleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.shinhan.bananaapp.exception;
 
-import com.shinhan.bananaapp.dto.prev.AccountDTO;
-import com.shinhan.bananaapp.mapper.AccountMapper;
+import com.shinhan.bananaapp.mybatisprac.prev.AccountDTO;
+import com.shinhan.bananaapp.mybatisprac.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

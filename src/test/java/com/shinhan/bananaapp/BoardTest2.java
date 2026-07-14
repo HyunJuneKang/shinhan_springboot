@@ -1,8 +1,8 @@
 package com.shinhan.bananaapp;
 
-import com.shinhan.bananaapp.dto.jpa.Board2DTOMapping;
-import com.shinhan.bananaapp.entity1.BoardEntity2;
-import com.shinhan.bananaapp.repository.jpa.BoardRepository2;
+import com.shinhan.bananaapp.jpaprac.dto.Board2DTOMapping;
+import com.shinhan.bananaapp.jpaprac.entity.entity1.BoardEntity2;
+import com.shinhan.bananaapp.jpaprac.repository.BoardRepository2;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

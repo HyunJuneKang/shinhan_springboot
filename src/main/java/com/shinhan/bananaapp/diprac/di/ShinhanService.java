@@ -1,0 +1,13 @@
+package com.shinhan.bananaapp.diprac.di;
+
+//@Component
+//@Getter
+//public class ShinhanService {
+//
+//    private final ShinhanRepository repo;
+//
+//    public ShinhanService(ShinhanRepository repo){
+//        this.repo = repo;
+//        String result = repo.toString();
+//    }
+//}

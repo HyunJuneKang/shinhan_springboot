@@ -1,11 +1,11 @@
 package com.shinhan.bananaapp;
 
 
-import com.shinhan.bananaapp.entity3.MemberEntity;
-import com.shinhan.bananaapp.entity3.MemberRole;
-import com.shinhan.bananaapp.entity3.ProfileEntity;
-import com.shinhan.bananaapp.repository.jpa.MemberRepository;
-import com.shinhan.bananaapp.repository.jpa.ProfileRepository;
+import com.shinhan.bananaapp.jpaprac.entity.entity3.MemberEntity;
+import com.shinhan.bananaapp.jpaprac.entity.entity3.MemberRole;
+import com.shinhan.bananaapp.jpaprac.entity.entity3.ProfileEntity;
+import com.shinhan.bananaapp.jpaprac.repository.MemberRepository;
+import com.shinhan.bananaapp.jpaprac.repository.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

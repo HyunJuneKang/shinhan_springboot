@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.shinhan.bananaapp.mapper.JobMapper">
+<mapper namespace="com.shinhan.bananaapp.mybatisprac.mapper.JobMapper">
     <!-- ResultMap: DB 컬럼 → Java 필드 명시적 매핑 -->
     <resultMap id="jobResultMap" type="JobDTO">
         <id property="jobId" column="job_id"/>

@@ -3,9 +3,9 @@ package com.shinhan.bananaapp;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.shinhan.bananaapp.entity2.QWebBoardEntity;
-import com.shinhan.bananaapp.entity2.WebBoardEntity;
-import com.shinhan.bananaapp.repository.jpa.WebBoardRepository;
+import com.shinhan.bananaapp.jpaprac.entity.entity2.QWebBoardEntity;
+import com.shinhan.bananaapp.jpaprac.entity.entity2.WebBoardEntity;
+import com.shinhan.bananaapp.jpaprac.repository.WebBoardRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

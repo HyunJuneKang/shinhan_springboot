@@ -1,6 +1,6 @@
 package com.shinhan.bananaapp;
 
-import com.shinhan.bananaapp.dto.prev.AccountDTO;
+import com.shinhan.bananaapp.mybatisprac.prev.AccountDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
