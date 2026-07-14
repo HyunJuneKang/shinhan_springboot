@@ -6,13 +6,12 @@ import com.shinhan.bananaapp.filter.RequestLoggingFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Slf4j
-@Configuration
+//@Configuration
 public class FilterConfig {
 
-    @Bean
+//    @Bean
     public FilterRegistrationBean<EncodingFilter> encodingFilter() {
         FilterRegistrationBean<EncodingFilter> bean =
                 new FilterRegistrationBean<>();

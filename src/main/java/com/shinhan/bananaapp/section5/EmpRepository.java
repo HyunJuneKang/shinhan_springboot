@@ -1,6 +1,6 @@
 package com.shinhan.bananaapp.section5;
 
-import com.shinhan.bananaapp.dto.AccountDTO;
+import com.shinhan.bananaapp.dto.prev.AccountDTO;
 
 //@Repository("empRepo")
 public class EmpRepository {

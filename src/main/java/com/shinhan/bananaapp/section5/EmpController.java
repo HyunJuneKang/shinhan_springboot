@@ -1,6 +1,6 @@
 package com.shinhan.bananaapp.section5;
 
-import com.shinhan.bananaapp.dto.AccountDTO;
+import com.shinhan.bananaapp.dto.prev.AccountDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 

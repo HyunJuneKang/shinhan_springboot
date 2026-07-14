@@ -1,7 +1,7 @@
 package com.shinhan.bananaapp.mapper;
 
-import com.shinhan.bananaapp.dto.EmpDTO;
-import com.shinhan.bananaapp.dto.EmpSearchDTO;
+import com.shinhan.bananaapp.dto.prev.EmpDTO;
+import com.shinhan.bananaapp.dto.prev.EmpSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

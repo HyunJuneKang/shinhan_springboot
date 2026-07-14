@@ -1,17 +1,16 @@
 package com.shinhan.bananaapp.filter;
 
-import com.shinhan.bananaapp.dto.MemberDTO;
-import com.shinhan.bananaapp.service.MemberService;
+import com.shinhan.bananaapp.dto.prev.MemberDTO;
+import com.shinhan.bananaapp.service.jdbc.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class LoginCheckInterceptor implements HandlerInterceptor {
 

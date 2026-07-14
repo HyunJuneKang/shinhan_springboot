@@ -1,18 +1,16 @@
 package com.shinhan.bananaapp.filter;
 
 import com.shinhan.bananaapp.annotation.LoginRequired;
-import com.shinhan.bananaapp.dto.MemberDTO;
+import com.shinhan.bananaapp.dto.prev.MemberDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LoginCheckAspect {
     private final HttpServletRequest request;
     public LoginCheckAspect(HttpServletRequest request) {

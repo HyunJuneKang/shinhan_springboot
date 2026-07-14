@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Aspect       // AOP 클래스 선언 = @PointCut + 시점(Before,After,After...,Around) + Advice(보조업무)
+//@Aspect       // AOP 클래스 선언 = @PointCut + 시점(Before,After,After...,Around) + Advice(보조업무)
 @Component    // Spring Bean 등록
 @Order(0)
 public class LogAspect {
@@ -20,7 +20,7 @@ public class LogAspect {
     public void allMethods2() {
     }
 
-    @Pointcut("execution(* com.shinhan.bananaapp.aop2.*.*(..))")
+    @Pointcut("execution(* com.shinhan.bananaapp.*.*.*(..))")
     public void allMethods() {
     }
     // within() : CalculatorImpl 클래스 안의 모든 메서드
@@ -39,12 +39,12 @@ public class LogAspect {
         System.out.println(Arrays.toString(jp.getArgs()));
         System.out.println("order(0)[AfterReturning] 반환값 : " + result);
     }
-    // ── @AfterReturning ────────────────────────────────────────────
-    @AfterReturning(pointcut = "allMethods2()", returning = "result")
-    public void afterReturningLog2(JoinPoint jp, Object result) {
-        System.out.println(Arrays.toString(jp.getArgs()));
-        System.out.println("[AfterReturning] 반환값 : " + result);
-    }
+//    // ── @AfterReturning ────────────────────────────────────────────
+//    @AfterReturning(pointcut = "allMethods2()", returning = "result")
+//    public void afterReturningLog2(JoinPoint jp, Object result) {
+//        System.out.println(Arrays.toString(jp.getArgs()));
+//        System.out.println("[AfterReturning] 반환값 : " + result);
+//    }
     // ── @AfterThrowing ─────────────────────────────────────────────
     @AfterThrowing(pointcut = "allMethods()", throwing = "ex")
     public void afterThrowingLog(JoinPoint jp, Exception ex) {

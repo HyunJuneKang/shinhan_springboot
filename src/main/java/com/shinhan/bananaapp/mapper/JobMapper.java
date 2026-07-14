@@ -1,6 +1,6 @@
 package com.shinhan.bananaapp.mapper;
 
-import com.shinhan.bananaapp.dto.JobDTO;
+import com.shinhan.bananaapp.dto.prev.JobDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

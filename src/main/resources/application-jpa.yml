@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    hibernate:
+      # create: 기존 테이블 삭제 후 생성 / update: 변경 부분만 반영
+      # validate: 매핑 검증만 / none: 아무것도 안 함
+      # 운영에서는 반드시 validate 또는 none!
+      ddl-auto: update
+    show-sql: true                          # 실행시 SQL 콘솔 출력, 운영환경은 false
+    properties:
+      hibernate:
+        format_sql: true                    # SQL 포맷팅(가독성 개선)
+
+

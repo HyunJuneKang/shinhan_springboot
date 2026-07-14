@@ -1,9 +1,9 @@
 package com.shinhan.bananaapp.mapper;
 
-import com.shinhan.bananaapp.dto.AccountDTO;
-import com.shinhan.bananaapp.dto.AccountSearchDTO;
-import com.shinhan.bananaapp.dto.AccountWithAttachmentDTO;
-import com.shinhan.bananaapp.dto.AttachmentDTO;
+import com.shinhan.bananaapp.dto.prev.AccountDTO;
+import com.shinhan.bananaapp.dto.prev.AccountSearchDTO;
+import com.shinhan.bananaapp.dto.prev.AccountWithAttachmentDTO;
+import com.shinhan.bananaapp.dto.prev.AttachmentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

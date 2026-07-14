@@ -9,11 +9,3 @@ spring:
       minimum-idle: 5            # 최소 유지 커넥션
       connection-timeout: 30000  # 커넥션 획득 대기 시간(ms)
       idle-timeout: 600000       # 유휴 커넥션 유지 시간(ms)
-
-mybatis:
-  mapper-locations: classpath:mappers/**/*.xml  # XML Mapper 경로
-  type-aliases-package: com.shinhan.bananaapp.dto # 별칭 패키지
-  configuration:
-    map-underscore-to-camel-case: true  # account_no → accountNo 자동 변환
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # SQL 로그 출력
-    jdbc-type-for-null: NULL #Oracle 과 PostgreSQL은 필수 MariaDB , MySQL은 자동으로 NULl이 들어감

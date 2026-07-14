@@ -2,11 +2,10 @@ package com.shinhan.bananaapp.config;
 
 import com.shinhan.bananaapp.filter.LoginCheckInterceptor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
