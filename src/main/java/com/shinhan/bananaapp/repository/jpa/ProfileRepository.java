@@ -3,7 +3,6 @@ package com.shinhan.bananaapp.repository.jpa;
 import com.shinhan.bananaapp.entity3.ProfileEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -16,6 +15,6 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity,Long> {
     //3. EntityGraph
 
     @EntityGraph(attributePaths = "member")
-    @Query("select p from ProfileEntity p")
+//    @Query("select p from ProfileEntity p")
     List<ProfileEntity> findAll();
 }
