@@ -39,6 +39,8 @@ fetch : 조회
     멤버는 select만 함
     LazyInitializationException 발생 , 발생 막으려면 @Transcational 추가
     문제점은 select 여러번 N+1 문제
-
-
- */
+    ToString()주의,지연컬럼은 반드시 제외한다.
+    LazyInitializationException 발생 ,발생막으려면 @Transcational 추가
+    문제점은 select여러번 N+1문제
+    *** 해결방법
+*/

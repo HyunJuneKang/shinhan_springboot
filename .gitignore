@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/generated/com/shinhan/bananaapp/entity2/QBaseEntity.java
+/src/main/generated/com/shinhan/bananaapp/entity1/QBoardEntity.java
+/src/main/generated/com/shinhan/bananaapp/entity1/QBoardEntity2.java
+/src/main/generated/com/shinhan/bananaapp/entity3/QMemberEntity.java
+/src/main/generated/com/shinhan/bananaapp/entity3/QProfileEntity.java
+/src/main/generated/com/shinhan/bananaapp/entity1/QSampleEntity.java
+/src/main/generated/com/shinhan/bananaapp/entity2/QWebBoardEntity.java
