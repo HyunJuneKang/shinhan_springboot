@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${board.title}">게시글 상세</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+    <script defer th:src="@{/js/replies.js}"></script>
+</head>
+<body th:attr="data-bno=${board.bno}">
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" th:href="@{/boards/list}">WEB BOARD</a>
+        <a class="button ghost light" th:href="@{/boards/list}">목록으로</a>
+    </div>
+</header>
+
+<main class="container narrow page-space">
+    <div class="flash" th:if="${msg}" th:text="${msg}"></div>
+
+    <article class="panel article-panel">
+        <div class="article-heading">
+            <div>
+                <p class="eyebrow" th:text="|POST #${board.bno}|">POST #1</p>
+                <h1 th:text="${board.title}">게시글 제목</h1>
+            </div>
+            <div class="article-actions">
+                <a class="button ghost" th:href="@{/boards/modify/{bno}(bno=${board.bno})}">수정</a>
+                <form method="post" th:action="@{/boards/remove/{bno}(bno=${board.bno})}"
+                      onsubmit="return confirm('게시글과 댓글을 모두 삭제할까요?');">
+                    <button class="button danger" type="submit">삭제</button>
+                </form>
+            </div>
+        </div>
+
+        <dl class="meta-grid">
+            <div>
+                <dt>작성자</dt>
+                <dd th:text="${board.writer}">writer</dd>
+            </div>
+            <div>
+                <dt>등록일</dt>
+                <dd th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm')}">2026-01-01</dd>
+            </div>
+            <div>
+                <dt>수정일</dt>
+                <dd th:text="${#temporals.format(board.modDate, 'yyyy-MM-dd HH:mm')}">2026-01-01</dd>
+            </div>
+        </dl>
+
+        <div class="article-content" th:text="${board.content}">내용</div>
+    </article>
+
+    <section class="panel reply-panel">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">AJAX REST API</p>
+                <h2>댓글 <span id="reply-count">0</span></h2>
+            </div>
+            <button id="reload-replies" class="button ghost small" type="button">새로고침</button>
+        </div>
+
+        <div id="reply-status" class="reply-status" aria-live="polite"></div>
+        <div id="reply-list" class="reply-list"></div>
+
+        <form id="reply-form" class="reply-form">
+            <div class="reply-form-grid">
+                <label class="field">
+                    <span>작성자</span>
+                    <input id="replyer" name="replyer" type="text" maxlength="100" required placeholder="댓글 작성자">
+                </label>
+                <label class="field reply-text-field">
+                    <span>댓글</span>
+                    <textarea id="reply" name="reply" rows="3" maxlength="1000" required placeholder="댓글 내용을 입력하세요"></textarea>
+                </label>
+            </div>
+            <div class="form-actions">
+                <button class="button primary" type="submit">댓글 등록</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="board-header">
+        <h2>📋 게시판</h2>
+        <!-- 글쓰기 버튼 (로그인 사용자만) -->
+        <button sec:authorize="isAuthenticated()"
+                class="btn-primary"
+                onclick="openWriteModal()">+ 글쓰기</button>
+    </div>
+
+    <!-- 검색 -->
+    <div class="search-wrap">
+        <input type="text" id="searchKeyword"
+               th:value="${keyword}"
+               placeholder="검색어 입력"
+               onkeydown="if(event.key==='Enter') searchPost()">
+        <button onclick="searchPost()">검색</button>
+        <button onclick="resetSearch()" class="btn-gray">전체</button>
+    </div>
+
+    <!-- 게시글 목록 -->
+    <div id="postList">
+        <th:block th:each="post : ${postPage.content}">
+            <div class="post-card" th:attr="data-id=${post.id}">
+
+                <!-- 게시글 헤더 -->
+                <div class="post-card-header">
+                    <div class="post-title-wrap">
+                        <span class="post-title"
+                              th:text="${post.title}"></span>
+                        <span class="post-badge"
+                              th:if="${post.commentCount > 0}"
+                              th:text="'💬' + ${post.commentCount}"></span>
+                    </div>
+                    <div class="post-actions"
+                         th:if="${#authentication != null
+                             and #authentication.name == post.writerId}">
+                        <button class="btn-sm btn-edit"
+                                th:onclick="'openEditModal(' + ${post.id}
+                                    + ', \'' + ${#strings.escapeXml(post.title)}
+                                    + '\', \'' + ${#strings.escapeXml(post.content)}
+                                    + '\')'">수정</button>
+                        <button class="btn-sm btn-danger"
+                                th:onclick="'deletePost(' + ${post.id} + ')'">
+                            삭제</button>
+                    </div>
+                </div>
+
+                <!-- 게시글 본문 -->
+                <div class="post-body">
+                    <p class="post-content"
+                       th:text="${post.content}"></p>
+                    <div class="post-meta">
+                        <span th:text="${post.writer}"></span>
+                        <span th:text="${#temporals.format(
+                            post.createdAt,'yyyy-MM-dd HH:mm')}"></span>
+                        <span>조회 <span th:text="${post.viewCount}"></span></span>
+                    </div>
+                </div>
+
+                <!-- 댓글 토글 버튼 -->
+                <div class="comment-toggle-wrap">
+                    <button class="comment-toggle-btn"
+                            th:onclick="'toggleComment(' + ${post.id} + ', this)'">
+                        💬 댓글
+                        <span th:text="${post.commentCount} + '개'"></span>
+                        ▼
+                    </button>
+                </div>
+
+                <!-- 댓글 영역 (기본 숨김) -->
+                <div class="comment-area" th:id="'comment-area-' + ${post.id}"
+                     style="display:none">
+                    <!-- 댓글 목록 -->
+                    <div th:id="'comment-list-' + ${post.id}"
+                         class="comment-list"></div>
+
+                    <!-- 댓글 입력 (로그인만) -->
+                    <div sec:authorize="isAuthenticated()"
+                         class="comment-input-wrap">
+                        <textarea th:id="'comment-input-' + ${post.id}"
+                                  placeholder="댓글을 입력하세요"
+                                  rows="2"></textarea>
+                        <button class="btn-primary btn-sm"
+                                th:onclick="'saveComment(' + ${post.id} + ')'">
+                            등록</button>
+                    </div>
+                    <div sec:authorize="isAnonymous()"
+                         class="comment-login-msg">
+                        <a th:href="@{/member/login}">로그인</a>
+                        후 댓글을 작성할 수 있습니다.
+                    </div>
+                </div>
+
+            </div>
+        </th:block>
+
+        <!-- 게시글 없음 -->
+        <div th:if="${postPage.empty}" class="empty-msg">
+            게시글이 없습니다.
+        </div>
+    </div>
+
+    <!-- 페이징 -->
+    <div class="pagination" id="pagination">
+        <button th:if="${currentPage > 0}"
+                th:onclick="'loadPage(' + ${currentPage - 1} + ')'">
+            &laquo; 이전
+        </button>
+        <button th:each="i : ${#numbers.sequence(0, postPage.totalPages - 1)}"
+                th:text="${i + 1}"
+                th:classappend="${i == currentPage} ? ' active' : ''"
+                th:onclick="'loadPage(' + ${i} + ')'"></button>
+        <button th:if="${currentPage < postPage.totalPages - 1}"
+                th:onclick="'loadPage(' + ${currentPage + 1} + ')'">
+            다음 &raquo;
+        </button>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     모달 — 게시글 등록 / 수정
+     ══════════════════════════════════════════ -->
+<div id="postModal" class="modal-overlay" style="display:none"
+     onclick="closeModal(event)">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="modalTitle">글쓰기</h3>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="modalPostId">
+            <div class="form-group">
+                <label>제목</label>
+                <input type="text" id="modalPostTitle"
+                       placeholder="제목을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label>내용</label>
+                <textarea id="modalPostContent"
+                          rows="8"
+                          placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="modalSaveBtn" class="btn-primary"
+                    onclick="savePost()">등록</button>
+            <button class="btn-gray" onclick="closeModal()">취소</button>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/board.js}"></script>
+</body>
+</html>

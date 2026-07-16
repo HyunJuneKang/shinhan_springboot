@@ -19,7 +19,17 @@ public class ManyToOneTest {
     MemberRepository memberRepo;
     @Autowired
     ProfileRepository profileRepo;
-
+    @Transactional
+    @Test
+    void f_selectAllProfile2(){
+        MemberEntity member = MemberEntity
+                .builder()
+                .mid("injin")
+                .build();
+        profileRepo.findByMember(member).forEach(p->{
+            System.out.println(p.getMember());
+        });
+    }
     @Transactional
     @Test
     void f_selectAllProfile(){
@@ -29,7 +39,6 @@ public class ManyToOneTest {
             System.out.println("--------------");
         });
     }
-
 
     @Test
     void insertProfile(){

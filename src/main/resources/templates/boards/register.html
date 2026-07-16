@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 등록</title>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" th:href="@{/boards/list}">WEB BOARD</a>
+        <a class="button ghost light" th:href="@{/boards/list}">목록으로</a>
+    </div>
+</header>
+
+<main class="container narrow page-space">
+    <section class="hero compact">
+        <p class="eyebrow">CREATE</p>
+        <h1>새 게시글</h1>
+        <p>제목, 작성자, 내용을 입력하세요.</p>
+    </section>
+
+    <section class="panel form-panel">
+        <form method="post" th:action="@{/boards/register}" th:object="${board}">
+            <label class="field">
+                <span>제목</span>
+                <input type="text" th:field="*{title}" maxlength="200" placeholder="제목을 입력하세요">
+                <small class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+            </label>
+
+            <label class="field">
+                <span>작성자</span>
+                <input type="text" th:field="*{writer}" maxlength="100" placeholder="작성자를 입력하세요">
+                <small class="field-error" th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}"></small>
+            </label>
+
+            <label class="field">
+                <span>내용</span>
+                <textarea th:field="*{content}" rows="12" maxlength="4000" placeholder="내용을 입력하세요"></textarea>
+                <small class="field-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></small>
+            </label>
+
+            <div class="form-actions">
+                <a class="button ghost" th:href="@{/boards/list}">취소</a>
+                <button class="button primary" type="submit">등록하기</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,7 +1,7 @@
 package com.shinhan.bananaapp.config;
 
 import com.shinhan.bananaapp.crosscuttingprac.filter.EncodingFilter;
-import com.shinhan.bananaapp.crosscuttingprac.filter.LoginCheckFilter;
+//import com.shinhan.bananaapp.crosscuttingprac.filter.LoginCheckFilter;
 import com.shinhan.bananaapp.crosscuttingprac.filter.RequestLoggingFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -33,14 +33,14 @@ public class FilterConfig {
     }
 
 //    @Bean
-    public FilterRegistrationBean<LoginCheckFilter> loginCheckFilter(){
-        FilterRegistrationBean<LoginCheckFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new LoginCheckFilter());
-        bean.setOrder(3);               // 로깅 다음에 실행
-        bean.addUrlPatterns("/*");      // 전체 경로 (WHITE_LIST는 필터 내부에서 처리)
-        bean.setName("loginCheckFilter");
-        return bean;
-    }
+//    public FilterRegistrationBean<LoginCheckFilter> loginCheckFilter(){
+//        FilterRegistrationBean<LoginCheckFilter> bean = new FilterRegistrationBean<>();
+//        bean.setFilter(new LoginCheckFilter());
+//        bean.setOrder(3);               // 로깅 다음에 실행
+//        bean.addUrlPatterns("/*");      // 전체 경로 (WHITE_LIST는 필터 내부에서 처리)
+//        bean.setName("loginCheckFilter");
+//        return bean;
+//    }
 
 
 }

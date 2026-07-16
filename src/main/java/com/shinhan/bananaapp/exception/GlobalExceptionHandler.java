@@ -42,13 +42,13 @@ public class GlobalExceptionHandler {
         return "error/404";
     }
 
-    // 최상위 예외 처리
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseEntity<ApiResponse<Void>> handleAll(Exception e) {
-        log.error("[Unhandled Exception]", e);
-        return ResponseEntity.internalServerError()
-                .body(ApiResponse.fail("서버 오류가 발생했습니다."));
-    }
+//    // 최상위 예외 처리
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public ResponseEntity<ApiResponse<Void>> handleAll(Exception e) {
+//        log.error("[Unhandled Exception]", e);
+//        return ResponseEntity.internalServerError()
+//                .body(ApiResponse.fail("서버 오류가 발생했습니다."));
+//    }
 
 }

@@ -1,5 +1,6 @@
 package com.shinhan.bananaapp.jpaprac.repository;
 
+import com.shinhan.bananaapp.jpaprac.entity.entity3.MemberEntity;
 import com.shinhan.bananaapp.jpaprac.entity.entity3.ProfileEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,8 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity,Long> {
     //2. Join Fetch
 //    @Query("select p from ProfileEntity p join fetch p.member")
     //3. EntityGraph
+    @EntityGraph(attributePaths = "member")
+    List<ProfileEntity> findByMember(MemberEntity member);
 
     @EntityGraph(attributePaths = "member")
 //    @Query("select p from ProfileEntity p")

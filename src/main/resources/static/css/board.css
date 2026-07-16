@@ -1,0 +1,151 @@
+/* ── Reset & Base ───────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: #f0f4f8; color: #333; line-height: 1.6; }
+
+/* ── Container ──────────────────────────────── */
+.container { max-width: 860px; margin: 36px auto; padding: 0 16px; }
+
+/* ── 헤더 ───────────────────────────────────── */
+.board-header { display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 20px; }
+.board-header h2 { color: #1F4E79; font-size: 24px; }
+
+/* ── 버튼 ───────────────────────────────────── */
+.btn-primary { background: #2E75B6; color: #fff; border: none;
+    padding: 8px 20px; border-radius: 6px;
+    cursor: pointer; font-size: 14px; }
+.btn-primary:hover { background: #1F4E79; }
+.btn-gray    { background: #6c757d; color: #fff; border: none;
+    padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+.btn-danger  { background: #e53e3e; color: #fff; border: none;
+    padding: 6px 14px; border-radius: 4px; cursor: pointer; }
+.btn-sm { padding: 4px 12px; font-size: 12px; border-radius: 4px; }
+.btn-edit { background: #fff; color: #2E75B6;
+    border: 1px solid #2E75B6; cursor: pointer; }
+.btn-edit:hover { background: #2E75B6; color: #fff; }
+
+/* ── 검색 ───────────────────────────────────── */
+.search-wrap { display: flex; gap: 8px; margin-bottom: 20px; }
+.search-wrap input { flex: 1; padding: 9px 14px;
+    border: 1px solid #ccc; border-radius: 6px; }
+
+/* ── 게시글 카드 ─────────────────────────────── */
+.post-card { background: #fff; border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    margin-bottom: 16px; overflow: hidden;
+    transition: box-shadow .2s; }
+.post-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+
+.post-card-header { display: flex; justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px 8px;
+    border-bottom: 1px solid #f0f0f0; }
+.post-title-wrap { display: flex; align-items: center; gap: 8px; }
+.post-title { font-size: 16px; font-weight: 600; color: #1F4E79; }
+.post-badge { background: #EBF5FB; color: #2E75B6;
+    font-size: 12px; padding: 2px 8px;
+    border-radius: 12px; }
+.post-actions { display: flex; gap: 6px; }
+
+.post-body { padding: 12px 20px; }
+.post-content { color: #444; margin-bottom: 10px;
+    white-space: pre-wrap; }
+.post-meta { display: flex; gap: 16px;
+    color: #999; font-size: 12px; }
+
+/* ── 댓글 토글 버튼 ──────────────────────────── */
+.comment-toggle-wrap { padding: 0 20px 12px; }
+.comment-toggle-btn { background: none; border: none;
+    color: #2E75B6; cursor: pointer;
+    font-size: 13px; padding: 4px 0; }
+.comment-toggle-btn:hover { text-decoration: underline; }
+.comment-toggle-btn.open { color: #1F4E79; font-weight: bold; }
+
+/* ── 댓글 영역 ───────────────────────────────── */
+.comment-area { background: #f8fafd;
+    border-top: 1px solid #e8eef5;
+    padding: 16px 20px; }
+.comment-list { margin-bottom: 12px; }
+
+.comment-item { background: #fff; border-radius: 8px;
+    padding: 12px 16px; margin-bottom: 8px;
+    border: 1px solid #eef2f7; }
+.comment-item-header { display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 6px; }
+.comment-writer { font-weight: 600; color: #1F4E79;
+    font-size: 13px; }
+.comment-date { color: #bbb; font-size: 11px; }
+.comment-content { color: #444; font-size: 14px; }
+.comment-item-actions { display: flex; gap: 6px;
+    margin-top: 8px; }
+.comment-item-actions button {
+    background: none; border: 1px solid #ddd;
+    padding: 3px 10px; border-radius: 4px;
+    font-size: 11px; cursor: pointer; }
+.comment-item-actions .c-edit:hover { border-color: #2E75B6;
+    color: #2E75B6; }
+.comment-item-actions .c-del:hover  { border-color: #e53e3e;
+    color: #e53e3e; }
+
+.comment-edit-area { margin-top: 8px; }
+.comment-edit-area textarea { width: 100%; padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit; }
+.comment-input-wrap { display: flex; gap: 8px; align-items: flex-end; }
+.comment-input-wrap textarea { flex: 1; padding: 9px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    resize: none; }
+.comment-login-msg { color: #999; font-size: 13px;
+    text-align: center; padding: 8px; }
+.comment-login-msg a { color: #2E75B6; }
+.empty-msg { text-align: center; color: #999;
+    padding: 40px; background: #fff;
+    border-radius: 10px; }
+
+/* ── 페이징 ─────────────────────────────────── */
+.pagination { display: flex; justify-content: center;
+    gap: 4px; margin-top: 24px; }
+.pagination button { padding: 7px 13px; border: 1px solid #ddd;
+    border-radius: 5px; background: #fff;
+    cursor: pointer; font-size: 13px; }
+.pagination button:hover { border-color: #2E75B6; color: #2E75B6; }
+.pagination button.active { background: #2E75B6; color: #fff;
+    border-color: #2E75B6; }
+
+/* ── 모달 ───────────────────────────────────── */
+.modal-overlay { position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,.45);
+    display: flex; align-items: center;
+    justify-content: center; z-index: 1000; }
+.modal-box { background: #fff; border-radius: 12px;
+    width: 600px; max-width: 95vw;
+    box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    animation: modalIn .2s ease; }
+@keyframes modalIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to   { transform: translateY(0);     opacity: 1; }
+}
+.modal-header { display: flex; justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px; border-bottom: 1px solid #eee; }
+.modal-header h3 { color: #1F4E79; }
+.modal-close { background: none; border: none;
+    font-size: 20px; cursor: pointer; color: #999; }
+.modal-close:hover { color: #333; }
+.modal-body { padding: 20px 24px; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid #eee;
+    display: flex; gap: 8px; justify-content: flex-end; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; margin-bottom: 6px;
+    font-weight: 600; color: #1F4E79;
+    font-size: 14px; }
+.form-group input, .form-group textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1px solid #ccc; border-radius: 6px;
+    font-family: inherit; font-size: 14px; }
+.form-group textarea { resize: vertical; }
