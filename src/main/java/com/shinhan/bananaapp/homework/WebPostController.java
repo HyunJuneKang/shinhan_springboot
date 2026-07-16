@@ -4,6 +4,8 @@ package com.shinhan.bananaapp.homework;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +39,12 @@ public class WebPostController {
     @PostMapping("/save")
     @ResponseBody
     public ResponseEntity<?> save(
-            @RequestBody WebPostDTO dto
-            //,            @AuthenticationPrincipal UserDetails user
+            @RequestBody WebPostDTO dto,
+            @AuthenticationPrincipal UserDetails user
     ) {
 
-        //dto.setWriter(user.getUsername());
-        //dto.setWriterId(user.getUsername());
-        dto.setWriter("찐");
-        dto.setWriterId("jin");
+        dto.setWriter(user.getUsername());
+        dto.setWriterId(user.getUsername());
         Long id = boardService.savePost(dto);
         System.out.println(id + "등록" + dto);
         return ResponseEntity.ok(Map.of("id", id, "msg", "등록완료"));
@@ -55,10 +55,11 @@ public class WebPostController {
     @ResponseBody
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @RequestBody WebPostDTO dto
-             //,          @AuthenticationPrincipal UserDetails user
+            @RequestBody WebPostDTO dto,
+            @AuthenticationPrincipal UserDetails user
     ) {
-
+        dto.setWriter(user.getUsername());
+        dto.setWriterId(user.getUsername());
         boardService.updatePost(id, dto);
         return ResponseEntity.ok(Map.of("msg", "수정완료"));
     }
@@ -67,8 +68,8 @@ public class WebPostController {
     @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity<?> delete(
-            @PathVariable Long id
-           // @AuthenticationPrincipal UserDetails user
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails user
            ) {
 
         boardService.deletePost(id);

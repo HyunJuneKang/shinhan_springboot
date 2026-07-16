@@ -3,6 +3,8 @@ package com.shinhan.bananaapp.homework;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,14 +29,12 @@ public class WebCommentController {
     // POST /api/comment
     @PostMapping
     public ResponseEntity<WebCommentDTO> save(
-            @RequestBody WebCommentDTO dto
-           // ,           @AuthenticationPrincipal UserDetails user
+            @RequestBody WebCommentDTO dto,
+            @AuthenticationPrincipal UserDetails user
             ) {
 
-       // dto.setWriter(user.getUsername());
-       // dto.setWriterId(user.getUsername());
-        dto.setWriter("찐");
-        dto.setWriterId("jin");
+        dto.setWriter(user.getUsername());
+        dto.setWriterId(user.getUsername());
         return ResponseEntity.ok(boardService.saveComment(dto));
     }
 
@@ -43,10 +43,11 @@ public class WebCommentController {
     @PutMapping("/{id}")
     public ResponseEntity<WebCommentDTO> update(
             @PathVariable Long id,
-            @RequestBody WebCommentDTO dto
-           // @AuthenticationPrincipal UserDetails user
+            @RequestBody WebCommentDTO dto,
+            @AuthenticationPrincipal UserDetails user
             ) {
-
+        dto.setWriter(user.getUsername());
+        dto.setWriterId(user.getUsername());
         return ResponseEntity.ok(boardService.updateComment(id, dto));
     }
 
@@ -55,9 +56,7 @@ public class WebCommentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> delete(
             @PathVariable Long id
-            //@AuthenticationPrincipal UserDetails user
             ) {
-
         boardService.deleteComment(id);
         return ResponseEntity.ok(Map.of("result", "삭제완료"));
     }

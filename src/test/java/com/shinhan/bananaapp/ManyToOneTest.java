@@ -9,6 +9,7 @@ import com.shinhan.bananaapp.jpaprac.repository.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.IntStream;
@@ -64,25 +65,30 @@ public class ManyToOneTest {
     void f_insertMember(){
         //3명 Insert
         MemberEntity m1 = MemberEntity.builder()
-                .mid("injin")
-                .mname("지인진")
-                .mpassword("1234")
+                .mid("injin2")
+                .mname("지인진2")
+                .mpassword(passwordEncoder.encode("1234"))
                 .mrole(MemberRole.ADMIN)
                 .build();
         MemberEntity m2 = MemberEntity.builder()
-                .mid("bean")
-                .mname("박채빈")
-                .mpassword("1234")
+                .mid("bean2")
+                .mname("박채빈2")
+                .mpassword(passwordEncoder.encode("1234"))
                 .mrole(MemberRole.MANAGER)
                 .build();
         MemberEntity m3 = MemberEntity.builder()
-                .mid("suk")
-                .mname("김민석")
-                .mpassword("1234")
+                .mid("suk2")
+                .mname("김민석2")
+                .mpassword(passwordEncoder.encode("1234"))
                 .mrole(MemberRole.USER)
                 .build();
         memberRepo.save(m1);
         memberRepo.save(m2);
         memberRepo.save(m3);
     }
+
+    //==============================================Security====================================
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
 }

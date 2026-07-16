@@ -4,6 +4,26 @@
 let currentKeyword = '';
 let currentPage    = 0;
 
+//----CSRF TOKEN읽어서 Ajax 코드에 넣기
+
+// JS 파일에 추가 — Ajax 요청 시 헤더로 토큰 전송
+var csrfToken = $("meta[name='_csrf']").attr("content");
+var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+if (csrfToken && csrfHeader) {
+    $(document).ajaxSend(function (event, xhr) {
+        xhr.setRequestHeader(csrfHeader, csrfToken);
+    });
+}
+
+const res = await fetch(url, {
+    method,
+    headers: {
+        'Content-Type': 'application/json',
+        [csrfHeader]: csrfToken
+    },
+    body: JSON.stringify({ title, content })
+});
+
 // ════════════════════════════════════════════
 // 모달 — 게시글 등록 / 수정
 // ════════════════════════════════════════════
@@ -16,6 +36,13 @@ function openWriteModal() {
     document.getElementById('modalPostContent').value   = '';
     document.getElementById('modalSaveBtn').textContent = '등록';
     document.getElementById('postModal').style.display  = 'flex';
+}
+
+function openEditModalFromButton(button) {
+    const postId = button.dataset.id;
+    const title = button.dataset.title;
+    const content = button.dataset.content;
+    openEditModal(postId, title, content);
 }
 
 // 수정 모달 열기
@@ -130,28 +157,53 @@ function renderComments(postId, comments) {
     const list = document.getElementById(`comment-list-${postId}`);
 
     if (!comments.length) {
-        list.innerHTML = '<p style="color:#bbb;font-size:13px;padding:8px 0">첫 번째 댓글을 작성해보세요!</p>';
+        list.innerHTML =
+            '<p style="color:#bbb;font-size:13px;padding:8px 0">' +
+            '첫 번째 댓글을 작성해보세요!</p>';
         return;
     }
 
     list.innerHTML = comments.map(c => `
         <div class="comment-item" id="ci-${c.id}">
             <div class="comment-item-header">
-                <span class="comment-writer">${c.writer}</span>
-                <span class="comment-date">${formatDate(c.createdAt)}</span>
+                <span class="comment-writer">
+                    ${escapeHtml(c.writer ?? '')}
+                </span>
+                <span class="comment-date">
+                    ${formatDate(c.createdAt)}
+                </span>
             </div>
+
             <div class="comment-content" id="cc-${c.id}">
-                ${escapeHtml(c.content)}
+                ${escapeHtml(c.content ?? '')}
             </div>
+
             <div class="comment-item-actions" id="ca-${c.id}">
-                <button class="c-edit"
-                  onclick="editCommentUI(${c.id}, '${escapeJs(c.content)}',
-                           ${postId})">수정</button>
-                <button class="c-del"
-                  onclick="deleteComment(${c.id}, ${postId})">삭제</button>
+                <button type="button"
+                        class="c-edit"
+                        data-comment-id="${c.id}"
+                        data-post-id="${postId}"
+                        data-content="${escapeHtml(c.content ?? '')}"
+                        onclick="editCommentFromButton(this)">
+                    수정
+                </button>
+
+                <button type="button"
+                        class="c-del"
+                        onclick="deleteComment(${c.id}, ${postId})">
+                    삭제
+                </button>
             </div>
         </div>
     `).join('');
+}
+
+function editCommentFromButton(button) {
+    const commentId = Number(button.dataset.commentId);
+    const postId = Number(button.dataset.postId);
+    const content = button.dataset.content;
+
+    editCommentUI(commentId, content, postId);
 }
 
 // 댓글 등록
@@ -163,7 +215,10 @@ async function saveComment(postId) {
     try {
         const res = await fetch('/api/comment', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
             body: JSON.stringify({ content, postId })
         });
         if (!res.ok) throw new Error('등록 실패');
@@ -183,13 +238,25 @@ function editCommentUI(id, original, postId) {
 
     contentEl.innerHTML = `
         <div class="comment-edit-area">
-            <textarea id="ce-${id}" rows="2">${original}</textarea>
-        </div>`;
+            <textarea id="ce-${id}" rows="2"></textarea>
+        </div>
+    `;
+
+    document.getElementById(`ce-${id}`).value = original;
+
     actionsEl.innerHTML = `
-        <button class="c-edit"
-                onclick="updateComment(${id}, ${postId})">저장</button>
-        <button class="c-del"
-                onclick="loadComments(${postId})">취소</button>`;
+        <button type="button"
+                class="c-edit"
+                onclick="updateComment(${id}, ${postId})">
+            저장
+        </button>
+
+        <button type="button"
+                class="c-del"
+                onclick="loadComments(${postId})">
+            취소
+        </button>
+    `;
 }
 
 // 댓글 수정 저장
@@ -291,13 +358,14 @@ function formatDate(dateStr) {
         + `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-function escapeHtml(str) {
-    return str.replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;');
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
 }
-
 function escapeJs(str) {
     return str.replace(/\\/g,'\\\\')
         .replace(/'/g,"\\'")

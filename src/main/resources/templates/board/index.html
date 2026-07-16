@@ -46,10 +46,13 @@
                          th:if="${#authentication != null
                              and #authentication.name == post.writerId}">
                         <button class="btn-sm btn-edit"
-                                th:onclick="'openEditModal(' + ${post.id}
-                                    + ', \'' + ${#strings.escapeXml(post.title)}
-                                    + '\', \'' + ${#strings.escapeXml(post.content)}
-                                    + '\')'">수정</button>
+                                type="button"
+                                th:data-id="${post.id}"
+                                th:data-title="${post.title}"
+                                th:data-content="${post.content}"
+                                onclick="openEditModalFromButton(this)">
+                            수정
+                        </button>
                         <button class="btn-sm btn-danger"
                                 th:onclick="'deletePost(' + ${post.id} + ')'">
                             삭제</button>
