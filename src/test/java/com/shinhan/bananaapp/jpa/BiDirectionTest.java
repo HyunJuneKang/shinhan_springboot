@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.jpa;
 
 import com.shinhan.bananaapp.replyprac.entity.FreeBoardEntity;
 import com.shinhan.bananaapp.replyprac.entity.FreeReplyEntity;
