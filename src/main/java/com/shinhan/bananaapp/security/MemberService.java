@@ -15,7 +15,6 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
     // Spring Security가 로그인 시 자동 호출
     // SecurityUser class (개발자가 구현 ) <----- User class <---- UserDetails
     @Override

@@ -9,5 +9,13 @@ spring:
     properties:
       hibernate:
         format_sql: true                    # SQL 포맷팅(가독성 개선)
+    defer-datasource-initialization: true   # ←  JPA 초기화 완료 후 SQL 실행하도록 순서 보장
 
-
+  batch:
+    job:
+      enabled: false      # 서버 시작 시 자동 실행 방지
+    jdbc:
+      initialize-schema: never # 배치 메타 테이블 자동 생성 : always , 자동 생성 x : never , 이미있을시 자동생성하면 경고만 뜸
+  sql:
+    init:
+      mode: always

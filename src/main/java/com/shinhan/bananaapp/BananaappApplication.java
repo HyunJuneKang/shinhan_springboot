@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
@@ -14,6 +15,7 @@ import java.util.Arrays;
 @EnableAspectJAutoProxy
 //@EnableJpaRepositories(basePackages = "com.shinhan.repository")
 @EnableJpaAuditing
+@EnableScheduling
 public class BananaappApplication {
 
     public static void main(String[] args) {

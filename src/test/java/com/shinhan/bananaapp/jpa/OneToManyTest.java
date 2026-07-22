@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.jpa;
 
 import com.shinhan.bananaapp.onetomany.reposity.PDSBoardRepository;
 import com.shinhan.bananaapp.onetomany.reposity.PDSFileRepository;

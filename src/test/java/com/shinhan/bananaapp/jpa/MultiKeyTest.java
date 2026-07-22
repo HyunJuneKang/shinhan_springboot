@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.jpa;
 
 import com.shinhan.bananaapp.multikey.*;
 import org.junit.jupiter.api.Test;

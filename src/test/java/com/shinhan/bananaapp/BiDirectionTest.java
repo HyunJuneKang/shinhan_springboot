@@ -2,8 +2,8 @@ package com.shinhan.bananaapp;
 
 import com.shinhan.bananaapp.replyprac.entity.FreeBoardEntity;
 import com.shinhan.bananaapp.replyprac.entity.FreeReplyEntity;
-import com.shinhan.bananaapp.replyprac.repo.FreeBoardRepository;
-import com.shinhan.bananaapp.replyprac.repo.FreeReplyRepository;
+import com.shinhan.bananaapp.replyprac.repository.FreeBoardRepository;
+import com.shinhan.bananaapp.replyprac.repository.FreeReplyRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

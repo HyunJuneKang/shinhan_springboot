@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.jpa;
 
 import com.shinhan.bananaapp.manytoonereview.entity.OrderEntity;
 import com.shinhan.bananaapp.manytoonereview.entity.ProductEntity;

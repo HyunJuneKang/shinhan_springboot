@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.board;
 
 import com.shinhan.bananaapp.jpaprac.entity.entity1.BoardEntity;
 import com.shinhan.bananaapp.jpaprac.repository.BoardRepository;

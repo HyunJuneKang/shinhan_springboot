@@ -23,7 +23,6 @@ public class GlobalExceptionHandler {
         log.warn("[BusinessException] {} - {}", e.getErrorCode(), e.getMessage());
         return ResponseEntity.badRequest().body(ApiResponse.fail(e.getMessage()));
     }
-
     // 유효성 검사 예외
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody

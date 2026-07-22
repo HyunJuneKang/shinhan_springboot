@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.board;
 
 import com.shinhan.bananaapp.jpaprac.dto.Board2DTOMapping;
 import com.shinhan.bananaapp.jpaprac.entity.entity1.BoardEntity2;

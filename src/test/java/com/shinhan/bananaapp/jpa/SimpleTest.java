@@ -1,4 +1,4 @@
-package com.shinhan.bananaapp;
+package com.shinhan.bananaapp.jpa;
 
 import com.shinhan.bananaapp.jpaprac.entity.entity1.SampleEntity;
 import com.shinhan.bananaapp.jpaprac.repository.SampleRepository;
