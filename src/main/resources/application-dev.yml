@@ -22,6 +22,14 @@ springdoc:
   api-docs:
     path: /api-docs           # OpenAPI JSON 경로
 
+#spring:
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+#      repositories:
+#        enabled: false
+
 
 server:
   port: 8000

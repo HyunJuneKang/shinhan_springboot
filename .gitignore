@@ -67,3 +67,12 @@ out/
 /src/main/generated/com/shinhan/bananaapp/onetoone/QUserEntity3.java
 /src/main/generated/com/shinhan/bananaapp/homework/QWebCommentEntity.java
 /src/main/generated/com/shinhan/bananaapp/homework/QWebPostEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/batchprac1/entity/QAfterEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/batchprac1/entity/QBeforeEntity.java
+/src/main/generated/com/shinhan/bananaapp/security/jwt/QRefreshTokenEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/batchprac3/entity/QSavingsEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/batchprac3/entity/QSavingsMaturityEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/batchprac2/entity/QSettlementEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/entity/QSettlementEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/batchprac2/entity/QTransactionEntity.java
+/src/main/generated/com/shinhan/bananaapp/batch/entity/QTransactionEntity.java
