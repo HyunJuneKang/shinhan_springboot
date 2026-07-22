@@ -43,3 +43,4 @@ public class BoardTest {
         boardRepository.findByBnoBetween(1L,3L).forEach(System.out::println);
     }
 }
+//
