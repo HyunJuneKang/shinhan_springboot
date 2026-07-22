@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "t_freereply")
+@Table(name = "tbl_freereply")
 @Getter
 @Setter
 @Builder
