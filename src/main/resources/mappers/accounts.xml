@@ -13,6 +13,7 @@
         <result property="accountType" column="account_type"/>
         <result property="createdAt"   column="created_at"/>
     </resultMap>
+
     <select id="findAll" resultMap="accountResultMap">
         SELECT * FROM accounts ORDER BY id DESC
     </select>

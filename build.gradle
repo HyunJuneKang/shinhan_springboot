@@ -226,6 +226,8 @@ dependencies {
     // 테스트용 인메모리 DB
     // 간단한 JPA 테스트를 MariaDB 없이 빠르게 실행할 때 사용
     testRuntimeOnly 'com.h2database:h2'
+    // Security 테스트
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 sourceSets {

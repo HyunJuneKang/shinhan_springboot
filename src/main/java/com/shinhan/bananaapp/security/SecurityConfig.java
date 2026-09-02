@@ -27,7 +27,8 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
-            "/webjars/**","/swagger-ui.html"
+            "/webjars/**","/swagger-ui.html",
+            "/freeboard/**"
     };
 
 
@@ -62,7 +63,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(
                                 (request, response, authException) -> {
                                     response.setStatus(
-                                            HttpServletResponse.SC_UNAUTHORIZED
+                                            HttpServletResponse.SC_FORBIDDEN
                                     );
                                     response.setContentType(
                                             "application/json;charset=UTF-8"
@@ -105,29 +106,29 @@ public class SecurityConfig {
 
         // 1. 인증, 인가 설정 — URL별 접근 권한
         //requestMatchers는 URL pattern
-        http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(WHITE_LIST).permitAll() //무조건허용
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
-                .anyRequest().authenticated()  //나머지는 반드시 인증되어야 자원사용가능
-        );
+//        http.authorizeHttpRequests(auth -> auth
+//                .requestMatchers(WHITE_LIST).permitAll() //무조건허용
+//                .requestMatchers("/admin/**").hasRole("ADMIN")
+//                .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
+//                .anyRequest().authenticated()  //나머지는 반드시 인증되어야 자원사용가능
+//        );
 
         // 2. CSRF 비활성화 (REST API + JWT 방식)
-
+        http.csrf(AbstractHttpConfigurer::disable);
         // 3. 폼 로그인 설정...default로 security 제공하는 페이지아닌 개발된 page로 변경
-        http.formLogin(login -> login
-                .loginPage("/auth/login")      //post는 자동처리
-                .usernameParameter("mid")        // 폼의 name 속성값
-                .passwordParameter("mpassword")  // 폼의 name 속성값
-                .successHandler((request, response, authentication) -> {
-                    response.sendRedirect("/auth/loginSuccess");
-                })
-                .failureHandler((request, response, exception) -> {
-                    request.getSession().setAttribute("loginError", "로그인 실패");
-                    response.sendRedirect("/auth/login");
-                })
-                .permitAll()
-        );
+//        http.formLogin(login -> login
+//                .loginPage("/auth/login")      //post는 자동처리
+//                .usernameParameter("mid")        // 폼의 name 속성값
+//                .passwordParameter("mpassword")  // 폼의 name 속성값
+//                .successHandler((request, response, authentication) -> {
+//                    response.sendRedirect("/auth/loginSuccess");
+//                })
+//                .failureHandler((request, response, exception) -> {
+//                    request.getSession().setAttribute("loginError", "로그인 실패");
+//                    response.sendRedirect("/auth/login");
+//                })
+//                .permitAll()
+//        );
 
         // 4. 로그아웃 설정
         http.logout(out -> out
